@@ -1,0 +1,12 @@
+Eureka是Netflix开源的服务发现组件，本身是一个基于REST的服务。它包含Server和Client两部分。
+Spring Cloud将它集成在子项目Spring Cloud Netflix中，从而实现微服务的注册与发现。
+
+Eureka Server：提供服务发现的能力，各个微服务启动时，会向Eureka Server注册自己的信息（例如IP、端口、微服务名等），Eureka Server会存储这些信息。
+
+Eureka Client：是一个Java客户端，用于简化与Eureka Server的交互。
+
+微服务启动后，会周期性（默认30s）向Eureka Server发送心跳以续约自己的“租期”。
+如果Eureka Server在一定时间内没有接收到某个微服务实例的心跳，Eureka Server将会注销该实例（默认90s）。
+默认情况下，Eureka Server同时也是Eureka Client。多个Eureka Server实例，互相之间通过复制的方式，来实现服务注册表中数据的同步。
+Eureka Client会缓存服务注册表中的信息。
+
