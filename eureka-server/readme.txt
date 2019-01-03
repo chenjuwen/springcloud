@@ -6,10 +6,9 @@
 
 访问地址： http://localhost:7000/
 
-https://blog.csdn.net/forezp/article/details/70148833
-https://www.fangzhipeng.com/archive/?tag=SpringCloud
-https://www.cnblogs.com/jinjiyese153/category/1182033.html
-https://www.cnblogs.com/chenweida/p/9025610.html
-https://windmt.com/2018/04/14/spring-cloud-1-services-governance/
-https://windmt.com/2018/04/15/spring-cloud-2-eureka/
+史上最简单的 SpringCloud 教程 https://blog.csdn.net/forezp/article/details/70148833
+方志朋的博客  https://www.fangzhipeng.com/archive/?tag=SpringCloud
+禁忌夜色153 https://www.cnblogs.com/jinjiyese153/category/1182033.html
+一抹书香  https://www.cnblogs.com/chenweida/p/9025610.html
+Finchley 版  https://windmt.com/2018/04/15/spring-cloud-2-eureka/
 
