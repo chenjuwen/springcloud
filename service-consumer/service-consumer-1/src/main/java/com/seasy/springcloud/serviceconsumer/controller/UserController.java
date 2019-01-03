@@ -7,12 +7,10 @@ import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-@RestController
-@RequestMapping("/user")
+//@RestController
 public class UserController {
 	@Autowired
     private LoadBalancerClient client;
@@ -20,7 +18,7 @@ public class UserController {
 	@Autowired
     private RestTemplate restTemplate;
 	
-	@GetMapping("/{id}")
+	@GetMapping("/user/{id}")
 	public String addUser(@PathVariable Long id){
 		System.out.println("consumer id = " + id);
 		
@@ -34,8 +32,12 @@ public class UserController {
 			System.out.println(key + "=" + value);
 		}
 		
+		//拼接服务调用者的接口地址：此处用IP:端口
 		String url = "http://" + instance.getHost() + ":" + instance.getPort() + "/user/" + id;
+		
+		//通过RestTemplate对象调用接口
 		String result = restTemplate.getForObject(url, String.class);
+		
 		return "consumer >> " + result;
 	}
 	
