@@ -4,10 +4,10 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.seasy.springcloud</groupId>
-    <artifactId>service-provider</artifactId>
+    <artifactId>service-consumer</artifactId>
     <version>1.0.0</version>
   </parent>
-  <artifactId>service-provider-1</artifactId>
+  <artifactId>service-consumer-1</artifactId>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

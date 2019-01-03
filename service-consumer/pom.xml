@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.seasy.springcloud</groupId>
-  <artifactId>service-provider</artifactId>
+  <artifactId>service-consumer</artifactId>
   <version>1.0.0</version>
   <packaging>pom</packaging>
   
@@ -50,7 +50,6 @@
   </dependencyManagement>
   
   <modules>
-  	<module>service-provider-1</module>
-  	<module>service-provider-2</module>
+  	<module>service-consumer-1</module>
   </modules>
 </project>

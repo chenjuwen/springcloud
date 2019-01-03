@@ -1,13 +1,9 @@
-package com.seasy.springcloud.eurekaserver;
+package com.seasy.springcloud.serviceprovider;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
-/**
- * Eureka Server: 服务注册中心
- */
-@EnableEurekaServer
+//@EnableDiscoveryClient
 @SpringBootApplication
 public class Main {
 	public static void main(String[] args) {
