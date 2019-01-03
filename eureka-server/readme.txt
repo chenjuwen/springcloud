@@ -1,8 +1,8 @@
 配置文件参数：
 	eureka.instance.hostname				
-	eureka.client.register-with-eureka		是否将自己注册到 Eureka Server
-	eureka.client.fetch-registry			是否从 Eureka Server 获取注册信息
-	eureka.client.service-url.defaultZone	设置与 Eureka Server 交互的地址
+	eureka.client.register-with-eureka		是否将自己注册到 Eureka Server，默认为true。
+	eureka.client.fetch-registry			是否从 Eureka Server 获取注册信息，默认为true。单节点Server不需要同步其他Server节点的数据时设为false
+	eureka.client.service-url.defaultZone	设置与 Eureka Server 交互的地址，查询服务和注册服务都需要依赖这个地址。
 
 访问地址： http://localhost:7000/
 
