@@ -38,7 +38,6 @@
 
   <modules>
   	<module>eureka-server-1</module>
-  	<module>eureka-server-2</module>
   </modules>
   
 </project>
