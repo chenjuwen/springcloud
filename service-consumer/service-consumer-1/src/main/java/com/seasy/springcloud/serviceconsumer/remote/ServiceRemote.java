@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * Feign的客户端接口类
  */
-@FeignClient(name="service-provider-1") //要调用的服务名称
+@FeignClient(name="service-provider-2") //要调用的服务名称
 public interface ServiceRemote {
 	//接口方法的结果要与服务提供者Controller定义的一致
 	@GetMapping("/user/{id}")
