@@ -22,10 +22,17 @@
   </properties>
 
   <dependencies>
+    <!-- 注册中心 -->
     <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
     </dependency>
+    
+    <!-- 用户认证 -->
+    <dependency>
+   		<groupId>org.springframework.boot</groupId>
+   		<artifactId>spring-boot-starter-security</artifactId>
+	</dependency>
   </dependencies>
   
   <dependencyManagement>
@@ -54,7 +61,7 @@
            		</configuration>
        		</plugin>
             
-	        <!-- 创建可执行jar：class文件、jar文件、webapp文件等 -->
+	        <!-- 创建可执行jar：class文件、jar文件等 -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
