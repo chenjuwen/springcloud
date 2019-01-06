@@ -1,13 +1,3 @@
-Eureka通过互相注册的方式来实现高可用的部署，所以我们只需要将 Eureke Server 配置其他可用的 service-url 就能实现高可用部署。
-
-自我保护模式：
-	自我保护模式是一种应对网络异常的安全保护措施。
-	当Eureka Server节点在短时间内丢失过多客户端时，那么这个节点就会进入自我保护模式。
-	一旦进入该模式，Eureka Server就会保护服务注册表中的信息，不再删除服务注册表中的数据。
-	当网络故障恢复后，该Eureka Server节点会自动退出自我保护模式。
-
-新版的security默认启用了csrf检验，如果不关闭该检验，eureka client端向eureka server注册时，会报如下异常：com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
-
 配置文件参数：
 	eureka.instance.hostname				实例的主机名
 	eureka.client.register-with-eureka		是否将自己注册到 Eureka Server，默认为true。
@@ -15,9 +5,4 @@ Eureka通过互相注册的方式来实现高可用的部署，所以我们只�
 	eureka.client.service-url.defaultZone	注册中心的地址，多个地址用逗号分隔
 	eureka.server.enable-self-preservation	是否启用自我保护模式
 
-
-
-方志朋的博客  https://www.fangzhipeng.com/archive/?tag=SpringCloud
-禁忌夜色153 https://www.cnblogs.com/jinjiyese153/category/1182033.html
-一抹书香  https://www.cnblogs.com/chenweida/p/9025610.html
 
