@@ -14,8 +14,8 @@ import com.seasy.springcloud.serviceapi.bean.User;
 /**
  * Feign的客户端接口类
  */
-@FeignClient(name="service-provider-1") //要调用的服务名称
-@RequestMapping("/user")
+//@FeignClient(name="service-provider-1") //要调用的服务名称
+//@RequestMapping("/user")
 public interface ServiceRemote {
 	//接口方法的结构要与服务提供者Controller定义的一致
 	@GetMapping("/{id}")

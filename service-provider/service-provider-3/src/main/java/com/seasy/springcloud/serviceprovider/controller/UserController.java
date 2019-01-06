@@ -16,7 +16,7 @@ import com.seasy.springcloud.serviceapi.bean.User;
 public class UserController {
 	@GetMapping("/{id}")
 	public String addUser(@PathVariable(value="id") Long id){
-		return "provider1 >> id=" + id;
+		return "provider3 >> id=" + id;
 	}
 
 	@GetMapping("/query")

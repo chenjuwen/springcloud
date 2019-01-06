@@ -42,16 +42,6 @@ Eureka的自我保护模式：
 Eureka的健康检查：
 	eureka.client.healthcheck.enabled=true
 
-
-Ribbon：
-	是一个基于 HTTP 和 TCP 的客户端负载均衡器。它主要包括六个组件：
-		ServerList，负载均衡使用的服务器列表。这个列表会缓存在负载均衡器中，并定期更新。当 Ribbon 与 Eureka 结合使用时，ServerList 的实现类就是 DiscoveryEnabledNIWSServerList，它会保存 Eureka Server 中注册的服务实例表。
-		ServerListFilter，服务器列表过滤器。这是一个接口，主要用于对 Service Consumer 获取到的服务器列表进行预过滤，过滤的结果也是 ServerList。Ribbon 提供了多种过滤器的实现。
-		IPing，探测服务实例是否存活的策略。
-		IRule，负载均衡策略，其实现类表述的策略包括：轮询、随机、根据响应时间加权等。
-		ILoadBalancer，负载均衡器。这也是一个接口，Ribbon 为其提供了多个实现，比如 ZoneAwareLoadBalancer。而上层代码通过调用其 API 进行服务调用的负载均衡选择。
-		RestClient，服务调用器。
-
 Hystrix：
 	Hystrix实现了断路器的模式。断路器本身是一种开关装置，当某个服务单元发生故障之后，通过断路器的故障监控，向调用方返回一个符合预期的、可处理的备选响应（FallBack），而不是长时间的等待或者抛出调用方无法处理的异常，这样就保证了服务调用方的线程不会被长时间、不必要地占用，从而避免了故障在分布式系统中的蔓延，乃至雪崩。
 	在请求失败频率较低的情况下，Hystrix 还是会直接把故障返回给客户端。只有当失败次数达到阈值时，断路器打开并且不进行后续通信，而是直接返回备选响应。
