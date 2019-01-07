@@ -8,12 +8,12 @@ import com.seasy.springcloud.serviceapi.bean.Address;
 import com.seasy.springcloud.serviceapi.bean.User;
 import com.seasy.springcloud.serviceconsumer.remote.ServiceRemote;
 
-//@RestController
+@RestController
 public class UserController {
 	@Autowired
     ServiceRemote serviceRemote;
 	
-	@GetMapping("/consumer")
+	@GetMapping("/consumer2")
 	public String test(){
 		String result = serviceRemote.addUser(22L);
 		System.out.println("result=" + result);
@@ -28,7 +28,7 @@ public class UserController {
 		User user = serviceRemote.add(address);
 		System.out.println(user.getId() + ", " + user.getUsername() + ", " + user.getPassword());
 		
-		return "ok";
+		return "ok: " + System.currentTimeMillis();
 	}
 	
 }

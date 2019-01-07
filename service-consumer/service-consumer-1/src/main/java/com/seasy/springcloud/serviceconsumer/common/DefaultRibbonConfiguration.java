@@ -12,9 +12,9 @@ import com.netflix.loadbalancer.RandomRule;
  * 该配置类不能被@ComponentScan扫描到，否则配置信息就会被所有 @RibbonClient 共享
  * Ribbon默认配置类是 RibbonClientConfiguration
  */
-//@Configuration
+@Configuration
 public class DefaultRibbonConfiguration {
-//	@Bean
+	@Bean
 	public IRule ribbonRule(){
 		IRule rule = new RandomRule(); //随机
 	    return rule;

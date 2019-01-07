@@ -10,9 +10,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.seasy.springcloud.serviceconsumer.common.DefaultRibbonConfiguration;
 
-/**
- * 启动类：使用 Spring Cloud Ribbon方式创建消费者
- */
 @EnableEurekaClient //注册中心是eureka时用此注解
 //@EnableDiscoveryClient  //注册中心是非eureka时用此注解
 

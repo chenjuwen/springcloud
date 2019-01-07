@@ -21,7 +21,7 @@ public class UserController {
 
 	@GetMapping("/query")
 	public String query(@RequestParam(value="name") String name){
-		return "provider >> name=" + name;
+		return "provider2 >> name=" + name;
 	}
 	
 	@PostMapping("/add")
@@ -29,8 +29,8 @@ public class UserController {
 		System.out.println(address.getProvince() + ", " + address.getCity());
 		User user = new User();
 		user.setId(100L);
-		user.setUsername("uid");
-		user.setPassword("pwd");
+		user.setUsername("uid2");
+		user.setPassword("pwd2");
 		return user;
 	}
 	
