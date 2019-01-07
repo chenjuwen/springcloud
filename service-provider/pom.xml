@@ -52,5 +52,6 @@
   <modules>
   	<module>service-provider-1</module>
   	<module>service-provider-2</module>
+  	<module>service-provider-3</module>
   </modules>
 </project>

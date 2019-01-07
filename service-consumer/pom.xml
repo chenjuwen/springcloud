@@ -51,5 +51,6 @@
   
   <modules>
   	<module>service-consumer-1</module>
+  	<module>service-consumer-2</module>
   </modules>
 </project>

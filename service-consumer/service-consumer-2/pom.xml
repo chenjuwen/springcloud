@@ -7,7 +7,7 @@
     <artifactId>service-consumer</artifactId>
     <version>1.0.0</version>
   </parent>
-  <artifactId>service-consumer-1</artifactId>
+  <artifactId>service-consumer-2</artifactId>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,6 +24,10 @@
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
     </dependency>
+	<dependency>
+	    <groupId>org.springframework.cloud</groupId>
+	    <artifactId>spring-cloud-starter-openfeign</artifactId>
+	</dependency>
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-web</artifactId>

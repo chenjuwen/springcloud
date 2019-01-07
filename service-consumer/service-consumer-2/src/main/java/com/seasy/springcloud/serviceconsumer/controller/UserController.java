@@ -9,7 +9,7 @@ import com.seasy.springcloud.serviceapi.bean.User;
 import com.seasy.springcloud.serviceconsumer.remote.ServiceRemote;
 
 //@RestController
-public class User3Controller {
+public class UserController {
 	@Autowired
     ServiceRemote serviceRemote;
 	

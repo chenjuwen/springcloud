@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 //@RestController
-public class User2Controller {
+public class UserController {
 //	@Autowired
     private RestTemplate restTemplate;
 	

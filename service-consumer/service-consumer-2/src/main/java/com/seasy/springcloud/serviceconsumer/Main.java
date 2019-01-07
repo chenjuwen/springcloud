@@ -10,8 +10,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 //@EnableDiscoveryClient
 @EnableFeignClients
 @SpringBootApplication
-public class Main3 {
+public class Main {
 	public static void main(String[] args) {
-		SpringApplication.run(Main3.class, args);
+		SpringApplication.run(Main.class, args);
 	}
 }

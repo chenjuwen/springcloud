@@ -20,7 +20,7 @@ import com.seasy.springcloud.serviceconsumer.common.DefaultRibbonConfiguration;
 @RibbonClient(name="service-provider-1", configuration=DefaultRibbonConfiguration.class)
 
 @SpringBootApplication
-public class Main2 {
+public class Main {
 	@Bean
 	@LoadBalanced
     public RestTemplate getRestTemplate() {
@@ -28,6 +28,6 @@ public class Main2 {
     }
 	
 	public static void main(String[] args) {
-		SpringApplication.run(Main2.class, args);
+		SpringApplication.run(Main.class, args);
 	}
 }
