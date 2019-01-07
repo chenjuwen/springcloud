@@ -1,4 +1,4 @@
-package com.seasy.springcloud.serviceconsumer.common;
+package com.seasy.springcloud.serviceapi.common;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +13,7 @@ import com.netflix.loadbalancer.RandomRule;
  * Ribbon默认配置类是 RibbonClientConfiguration
  */
 @Configuration
+@ExcludeComponent //用于标识该配置类不被@ComponentScan扫描
 public class DefaultRibbonConfiguration {
 	@Bean
 	public IRule ribbonRule(){

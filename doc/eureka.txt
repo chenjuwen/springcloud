@@ -51,7 +51,7 @@ Hystrix Dashboard：
 
 	
 Feign：
-	Feign是一个声明式的 Web Service 客户端，它的目的就是让 Web Service 调用更加简单。它整合了 Ribbon 和 Hystrix，从而让我们不再需要显式地使用这两个组件。
+	Feign是一个声明式的服务调用组件。它整合了 Ribbon 和 Hystrix，从而让我们不再需要显式地使用这两个组件。
 	Feign还提供了 HTTP 请求的模板，通过编写简单的接口和插入注解，我们就可以定义好 HTTP 请求的参数、格式、地址等信息。
 	Feign 会完全代理 HTTP 的请求，我们只需要像调用方法一样调用它就可以完成服务请求。
 	
@@ -62,6 +62,29 @@ Feign：
 		支持 Ribbon 的负载均衡
 		支持 HTTP 请求和响应的压缩
 
+自定义Feign的配置
+	
+Feign对压缩的支持
+	#开启请求压缩功能
+	feign.compression.request.enabled=true
+	 
+	#开启响应压缩功能
+	feign.compression.response.enabled=true
+	 
+	#指定压缩请求数据类型
+	feign.compression.request.mime-types=text/xml;application/xml;application/json
+	 
+	#如果传输超过该字节，就对其进行压缩，默认是2048
+	feign.compression.request.min-request-size=2048
+
+Feign的日志
+	可为每个Feign客户端指定日志记录策略，每个Feign客户端都会创建一个logger。
+	默认情况下，logger的名称是Feign接口的完整类名。需要注意的是，Feign的日志打印只会对DEBUG级别作出响应。
+	可为每个Feign客户端配置各自的Logger.Level对象，告诉Feign记录哪些日志。Logger.Level的值有以下选择：
+		NONE：不记录任何日志（默认值）
+		BASIC：仅记录请求方法、URL、响应状态代码以及执行时间
+		HEADERS：记录BASIC级别的基础上，记录请求和响应的header
+		FULL：记录请求和响应的header，body和元数据
 
 方志朋的博客  https://www.fangzhipeng.com/archive/?tag=SpringCloud
 禁忌夜色153 https://www.cnblogs.com/jinjiyese153/category/1182033.html
