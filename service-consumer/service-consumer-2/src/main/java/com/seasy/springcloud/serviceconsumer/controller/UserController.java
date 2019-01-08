@@ -12,6 +12,7 @@ import com.seasy.springcloud.serviceconsumer.feignclient.UserFeignClient;
 
 @RestController
 public class UserController {
+	//引入FeignClient类
 	@Autowired
     UserFeignClient userFeignClient;
 	
@@ -21,6 +22,7 @@ public class UserController {
 		String result = userFeignClient.addUser(22L);
 		System.out.println("result=" + result);
 
+		/*
 		//query
 		result = userFeignClient.query("cjm");
 		System.out.println("result=" + result);
@@ -49,6 +51,7 @@ public class UserController {
 		
 		user = userFeignClient.add(address);
 		System.out.println(user.getId() + ", " + user.getUsername() + ", " + user.getPassword());
+		*/
 		
 		return "ok: " + System.currentTimeMillis();
 	}

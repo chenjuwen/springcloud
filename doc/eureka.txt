@@ -46,45 +46,11 @@ Hystrix：
 	Hystrix实现了断路器的模式。断路器本身是一种开关装置，当某个服务单元发生故障之后，通过断路器的故障监控，向调用方返回一个符合预期的、可处理的备选响应（FallBack），而不是长时间的等待或者抛出调用方无法处理的异常，这样就保证了服务调用方的线程不会被长时间、不必要地占用，从而避免了故障在分布式系统中的蔓延，乃至雪崩。
 	在请求失败频率较低的情况下，Hystrix 还是会直接把故障返回给客户端。只有当失败次数达到阈值时，断路器打开并且不进行后续通信，而是直接返回备选响应。
 	
+	分布式系统中经常会出现某个基础服务不可用造成整个系统不可用的情况，这种现象被称为服务雪崩效应。为了应对服务雪崩，一种常见的做法是手动服务降级。而 Hystrix 的出现，给我们提供了另一种选择。
+	
 Hystrix Dashboard：
 	Hystrix 会持续地记录所有通过 Hystrix 发起的请求的执行信息，并以统计报表和图形的形式展示给用户。
 
-	
-Feign：
-	Feign是一个声明式的服务调用组件。它整合了 Ribbon 和 Hystrix，从而让我们不再需要显式地使用这两个组件，让服务调用更加简单。
-	Feign提供了HTTP请求的模板，通过编写简单的接口和插入注解，就可以定义好HTTP请求的参数、格式、地址等信息。
-	Feign 会完全代理 HTTP 的请求，我们只需要像调用方法一样调用它就可以完成服务请求。
-	
-	Feign具有如下特性：
-		可插拔的注解支持，包括 Feign 注解和 JAX-RS 注解
-		支持可插拔的 HTTP 编码器和解码器
-		支持 Hystrix 和它的 Fallback
-		支持 Ribbon 的负载均衡
-		支持 HTTP 请求和响应的压缩
-
-自定义Feign的配置
-	
-Feign对压缩的支持
-	#开启请求压缩功能
-	feign.compression.request.enabled=true
-	 
-	#开启响应压缩功能
-	feign.compression.response.enabled=true
-	 
-	#指定压缩请求数据类型
-	feign.compression.request.mime-types=text/xml;application/xml;application/json
-	 
-	#如果传输超过该字节，就对其进行压缩，默认是2048
-	feign.compression.request.min-request-size=2048
-
-Feign的日志
-	可为每个Feign客户端指定日志记录策略，每个Feign客户端都会创建一个logger。
-	默认情况下，logger的名称是Feign接口的完整类名。需要注意的是，Feign的日志打印只会对DEBUG级别作出响应。
-	可为每个Feign客户端配置各自的Logger.Level对象，告诉Feign记录哪些日志。Logger.Level的值有以下选择：
-		NONE：不记录任何日志（默认值）
-		BASIC：仅记录请求方法、URL、响应状态代码以及执行时间
-		HEADERS：记录BASIC级别的基础上，记录请求和响应的header
-		FULL：记录请求和响应的header，body和元数据
 
 方志朋的博客  https://www.fangzhipeng.com/archive/?tag=SpringCloud
 禁忌夜色153 https://www.cnblogs.com/jinjiyese153/category/1182033.html
