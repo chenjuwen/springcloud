@@ -22,7 +22,6 @@ public class UserController {
 		String result = userFeignClient.addUser(22L);
 		System.out.println("result=" + result);
 
-		/*
 		//query
 		result = userFeignClient.query("cjm");
 		System.out.println("result=" + result);
@@ -36,6 +35,9 @@ public class UserController {
 		address.setProvince("GuangDong");
 		address.setCity("GuangZhou");
 		
+		user = userFeignClient.add(address);
+		System.out.println(user.getId() + ", " + user.getUsername() + ", " + user.getPassword());
+		
 		//update
 		result = userFeignClient.update(address);
 		System.out.println("result=" + result);
@@ -48,10 +50,6 @@ public class UserController {
 		
 		//put
 		userFeignClient.put(address);
-		
-		user = userFeignClient.add(address);
-		System.out.println(user.getId() + ", " + user.getUsername() + ", " + user.getPassword());
-		*/
 		
 		return "ok: " + System.currentTimeMillis();
 	}

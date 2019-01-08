@@ -9,7 +9,7 @@ import com.seasy.springcloud.serviceapi.service.UserService;
  * 
  * name=服务名
  */
-@FeignClient(name="service-provider-1", configuration=DefaultFeignConfiguration.class)
+@FeignClient(name="service-provider-1", configuration=DefaultFeignConfiguration.class, fallback=UserFeignClientHystrix.class)
 public interface UserFeignClient extends UserService{
 	
 }

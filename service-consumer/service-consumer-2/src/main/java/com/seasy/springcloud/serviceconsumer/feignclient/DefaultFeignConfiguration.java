@@ -27,8 +27,11 @@ public class DefaultFeignConfiguration {
         return Logger.Level.BASIC;
     }
 	
+	/**
+	 * 断路器类
+	 */
 	@Bean
-	public UserFeignFallBack userFeignFallBack(){
-		return new UserFeignFallBack();
+	public UserFeignClientHystrix userFeignClientHystrix(){
+		return new UserFeignClientHystrix();
 	}
 }
