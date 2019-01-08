@@ -10,7 +10,7 @@ import org.springframework.context.annotation.FilterType;
 import com.seasy.springcloud.serviceapi.common.ExcludeComponent;
 
 @EnableEurekaClient
-@EnableFeignClients
+@EnableFeignClients //开启Feign功能
 //使用自定义注解@ExcludeComponent和excludeFilters使RibbonConfiguration类不被@CompantScan扫描到
 @ComponentScan(excludeFilters=@ComponentScan.Filter(type=FilterType.ANNOTATION, value={ExcludeComponent.class}))
 @SpringBootApplication

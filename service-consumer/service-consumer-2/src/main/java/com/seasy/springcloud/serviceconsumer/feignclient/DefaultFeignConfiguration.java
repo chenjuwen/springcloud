@@ -1,7 +1,9 @@
-package com.seasy.springcloud.serviceapi.common;
+package com.seasy.springcloud.serviceconsumer.feignclient;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.seasy.springcloud.serviceapi.common.ExcludeComponent;
 
 import feign.Logger;
 
@@ -14,8 +16,19 @@ import feign.Logger;
 @Configuration
 @ExcludeComponent //用于标识该配置类不被@ComponentScan扫描
 public class DefaultFeignConfiguration {
+	/**
+	 * 自定义日志输出
+	 * 
+	 * 需要在application.properties文件中添加以下信息才生效：
+	 * 		logging.level.com.seasy.springcloud.serviceconsumer.feignclient.UserFeignClient=DEBUG
+	 */
 	@Bean
     Logger.Level feignLoggerLevel() {
         return Logger.Level.BASIC;
     }
+	
+	@Bean
+	public UserFeignFallBack userFeignFallBack(){
+		return new UserFeignFallBack();
+	}
 }

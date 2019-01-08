@@ -51,11 +51,11 @@ Hystrix Dashboard：
 
 	
 Feign：
-	Feign是一个声明式的服务调用组件。它整合了 Ribbon 和 Hystrix，从而让我们不再需要显式地使用这两个组件。
-	Feign还提供了 HTTP 请求的模板，通过编写简单的接口和插入注解，我们就可以定义好 HTTP 请求的参数、格式、地址等信息。
+	Feign是一个声明式的服务调用组件。它整合了 Ribbon 和 Hystrix，从而让我们不再需要显式地使用这两个组件，让服务调用更加简单。
+	Feign提供了HTTP请求的模板，通过编写简单的接口和插入注解，就可以定义好HTTP请求的参数、格式、地址等信息。
 	Feign 会完全代理 HTTP 的请求，我们只需要像调用方法一样调用它就可以完成服务请求。
 	
-	Feign 具有如下特性：
+	Feign具有如下特性：
 		可插拔的注解支持，包括 Feign 注解和 JAX-RS 注解
 		支持可插拔的 HTTP 编码器和解码器
 		支持 Hystrix 和它的 Fallback
