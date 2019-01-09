@@ -10,19 +10,41 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.seasy.springcloud.serviceapi.bean.Address;
 import com.seasy.springcloud.serviceapi.bean.User;
 
 @RestController
 public class UserController {
+	//服务提供者的接口地址：此处用应用名
+	private String baseURL = "http://service-provider-1";
+	
 	@Autowired
     private RestTemplate restTemplate;
+
+	/**
+	 * 通过@HystrixCommand注解为业务方法指定回退方法
+	 * 		fallbackMethod: 回退方法
+	 * 		commandProperties: 指定Hystrix的隔离策略
+	 */
+	@HystrixCommand(fallbackMethod = "getUserById_Fallback",
+			commandProperties={
+					@HystrixProperty(name="execution.isolation.strategy", value="SEMAPHORE")
+			})
+	@GetMapping("/getUserById/{id}")
+	public String getUserById(@PathVariable Long id){
+		String result = restTemplate.getForObject(baseURL + "/user/{id}", String.class, id);
+		return result;
+	}
+	
+	public String getUserById_Fallback(Long id){
+		System.out.println("请求异常，执行回退方法");
+		return null;
+	}
 	
 	@GetMapping("/user/{id}")
 	public String addUser(@PathVariable Long id){
-		//服务提供者的接口地址：此处用应用名
-		String baseURL = "http://service-provider-1" ;
-		
 		String result = restTemplate.getForObject(baseURL + "/user/{id}", String.class, id);
 		System.out.println(result);
 		

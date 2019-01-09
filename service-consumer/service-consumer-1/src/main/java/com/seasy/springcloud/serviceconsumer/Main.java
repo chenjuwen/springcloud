@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,6 +23,7 @@ import com.seasy.springcloud.serviceapi.common.ExcludeComponent;
 //使用自定义注解@ExcludeComponent和excludeFilters使RibbonConfiguration类不被@CompantScan扫描到
 @ComponentScan(excludeFilters=@ComponentScan.Filter(type=FilterType.ANNOTATION, value={ExcludeComponent.class}))
 @SpringBootApplication
+@EnableHystrix //启用断路器支持
 public class Main {
 	@Bean
 	@LoadBalanced
