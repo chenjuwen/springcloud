@@ -75,15 +75,6 @@ public class UserController {
 		ResponseEntity<Void> voidEntity = restTemplate.postForEntity(baseURL + "/user/put", address, Void.class, new Object());
 		System.out.println(voidEntity.getStatusCodeValue());
 		
-		//restTemplate.delete(url, uriVariables);
-		//restTemplate.exchange(requestEntity, responseType)
-		//restTemplate.exchange(url, method, requestEntity, responseType, uriVariables)
-		//restTemplate.execute(url, method, requestCallback, responseExtractor)
-		//restTemplate.patchForObject(url, request, responseType)
-		//restTemplate.setErrorHandler(errorHandler);
-		//restTemplate.setInterceptors(interceptors);
-		//restTemplate.setRequestFactory(requestFactory);
-		
 		return System.currentTimeMillis() + " >> consumer1 >> " + result;
 	}
 	
