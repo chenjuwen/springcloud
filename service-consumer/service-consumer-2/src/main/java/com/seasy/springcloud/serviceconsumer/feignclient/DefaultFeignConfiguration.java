@@ -28,10 +28,12 @@ public class DefaultFeignConfiguration {
     }
 	
 	/**
-	 * 断路器类
+	 * 局部针对某个Feign客户端禁用Hystrix
 	 */
-	@Bean
-	public UserFeignClientHystrix userFeignClientHystrix(){
-		return new UserFeignClientHystrix();
-	}
+//	@Bean
+//	@Scope("prototype")
+//	public Feign.Builder feignBuilder() {
+//	    return Feign.builder();
+//	}
+	
 }
