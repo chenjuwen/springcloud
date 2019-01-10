@@ -48,6 +48,5 @@ Hystrix Dashboard：
 	Hystrix Dashboard 实现 Hystrix 指标数据的可视化面板
 
 方志朋的博客  https://www.fangzhipeng.com/archive/?tag=SpringCloud
-禁忌夜色153 https://www.cnblogs.com/jinjiyese153/category/1182033.html
 一抹书香  https://www.cnblogs.com/chenweida/p/9025610.html
 		

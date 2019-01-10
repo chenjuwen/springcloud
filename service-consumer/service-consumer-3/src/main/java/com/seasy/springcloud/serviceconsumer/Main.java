@@ -29,13 +29,16 @@ public class Main {
 	    return new RandomRule();
 	}
 	
+	/**
+	 * SpringBoot2+版本需要手动配置hystrix.stream端点
+	 */
 	@Bean
 	public ServletRegistrationBean getServlet() {
 	    HystrixMetricsStreamServlet streamServlet = new HystrixMetricsStreamServlet();
 	    ServletRegistrationBean registrationBean = new ServletRegistrationBean(streamServlet);
 	    registrationBean.setLoadOnStartup(1);
 	    registrationBean.addUrlMappings("/hystrix.stream");
-	    registrationBean.setName("HystrixMetricsStreamServlet");
+	    registrationBean.setName("hystrixMetricsStreamServlet");
 	    return registrationBean;
 	}
 	
