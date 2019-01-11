@@ -52,5 +52,7 @@
   <modules>
   	<module>service-consumer-1</module>
   	<module>service-consumer-2</module>
+  	<module>service-consumer-3</module>
+  	<module>config-consumer</module>
   </modules>
 </project>
