@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-@RefreshScope //开启配置中心的更新机制。接到SpringCloud配置中心配置刷新的时候，自动将新的配置更新到该类对应的字段中。
+//@RefreshScope //开启配置中心的更新机制。接到SpringCloud配置中心配置刷新的时候，自动将新的配置更新到该类对应的字段中。
 public class Main {
 	@Value("${jdbc.username}")
     private String username;
