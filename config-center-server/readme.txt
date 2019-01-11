@@ -15,6 +15,8 @@ http://localhost:4001/config/dev
 	spring.cloud.config.server.git.uri=https://github.com/chenjuwen/config-repository.git
 	#git仓库地址下的相对地址，多个用逗号分割
 	spring.cloud.config.server.git.search-paths=repository1
+	#配置仓库的分支
+	#spring.cloud.config.label=master
 	#访问 git仓库的用户名
 	spring.cloud.config.server.git.username=
 	#访问 git仓库的用户密码
