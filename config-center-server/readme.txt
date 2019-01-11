@@ -1,15 +1,13 @@
 配置中心访问地址：
 	格式： 
-		http://localhost:4001/{name}-{profiles}.properties
+		http://localhost:4001/{name}-{profile}.properties
+		http://localhost:4001/{name}/{profile}/{label}
 		http://localhost:4001/{name}/{profile}
-	范例：
-		http://localhost:4001/username/dev
-
-http://localhost:9001/config-server/dev/master
-http://localhost:9001/config-server/dev
-http://localhost:9001/username/dev
+		
+		{label}对应 git上不同的分支，默认为 master。
 
 http://localhost:4001/config-dev.properties
+http://localhost:4001/config/dev/master
 http://localhost:4001/config/dev
 
 配置参数说明：
@@ -21,3 +19,12 @@ http://localhost:4001/config/dev
 	spring.cloud.config.server.git.username=
 	#访问 git仓库的用户密码
 	spring.cloud.config.server.git.password=
+
+#配置中心应用的URL地址
+spring.cloud.config.uri=http://localhost:4001
+#配置文件的名称，对应 {name} 部分
+spring.cloud.config.name=config
+#对应 {profile} 部分
+spring.cloud.config.profile=dev
+#对应 {label} 部分
+#spring.cloud.config.label=master
