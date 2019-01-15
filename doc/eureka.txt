@@ -43,10 +43,6 @@ Eureka的健康检查：
 	eureka.client.healthcheck.enabled=true
 
 
-Hystrix Dashboard：
-	Hystrix 会持续地记录所有通过 Hystrix 发起的请求的执行信息，并以统计报表和图形的形式展示给用户。
-	Hystrix Dashboard 实现 Hystrix 指标数据的可视化面板
-
 方志朋的博客  https://www.fangzhipeng.com/archive/?tag=SpringCloud
 一抹书香  https://www.cnblogs.com/chenweida/p/9025610.html
 		
