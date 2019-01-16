@@ -39,8 +39,9 @@ public class UserController {
 	}
 	
 	public String getUserById_Fallback(Long id){
-		System.out.println("请求异常，执行回退方法");
-		return null;
+		String msg = "请求异常，执行回退方法";
+		System.out.println(msg);
+		return msg;
 	}
 	
 	@GetMapping("/user/{id}")

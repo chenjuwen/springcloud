@@ -15,6 +15,14 @@ public class UserController {
 	//引入FeignClient类
 	@Autowired
     UserFeignClient userFeignClient;
+
+	@GetMapping("/addUser")
+	public String addUser(){
+		//addUser
+		String result = userFeignClient.addUser(22L);
+		System.out.println("result=" + result);
+		return result;
+	}
 	
 	@GetMapping("/consumer2")
 	public String test(){
