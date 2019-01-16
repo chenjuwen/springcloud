@@ -2,6 +2,7 @@ package com.seasy.springcloud.zuul.filter;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.stereotype.Component;
 
 import com.netflix.zuul.ZuulFilter;
@@ -15,13 +16,13 @@ public class DefaultZuulFilter extends ZuulFilter {
 	/**
 	 * 过滤器类型，它决定过滤器在请求的哪个生命周期中执行。
 	 * 		pre：路由之前
-	 * 		routing：路由之时
+	 * 		route：路由之时
 	 * 		post： 路由之后
-	 * 		error：发送错误调用
+	 * 		error：处理请求发生错误时调用
 	 */
 	@Override
 	public String filterType() {
-		return "pre";
+		return FilterConstants.PRE_TYPE;
 	}
 	
 	/**
@@ -52,7 +53,7 @@ public class DefaultZuulFilter extends ZuulFilter {
         
         Object accessToken = request.getParameter("token");
         if(accessToken == null) {
-            requestContext.setSendZuulResponse(false); //令 Zuul 过滤该请求，不对其进行路由
+            requestContext.setSendZuulResponse(false); //过滤该请求，不对其进行路由
             requestContext.setResponseStatusCode(401); //返回的错误码
             
             try {

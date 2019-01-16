@@ -13,13 +13,14 @@ import org.springframework.http.client.ClientHttpResponse;
 
 public class DefaultClientHttpResponse implements ClientHttpResponse {
 	private String route;
-	private Throwable cause;
 	
-	public DefaultClientHttpResponse(String route, Throwable cause){
+	public DefaultClientHttpResponse(String route){
 		this.route = route;
-		this.cause = cause;
 	}
 	
+	/**
+	 * 响应体
+	 */
 	@Override
 	public InputStream getBody() throws IOException {
 		String result = "";
@@ -33,7 +34,6 @@ public class DefaultClientHttpResponse implements ClientHttpResponse {
 			e.printStackTrace();
 		}
 		
-		//响应体
 		return new ByteArrayInputStream(result.getBytes());
 	}
 
