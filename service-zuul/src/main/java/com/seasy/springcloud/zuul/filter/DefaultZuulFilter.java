@@ -52,7 +52,6 @@ public class DefaultZuulFilter extends ZuulFilter {
         
         Object accessToken = request.getParameter("token");
         if(accessToken == null) {
-        	System.out.println("token is empty");
             requestContext.setSendZuulResponse(false); //令 Zuul 过滤该请求，不对其进行路由
             requestContext.setResponseStatusCode(401); //返回的错误码
             
@@ -65,7 +64,6 @@ public class DefaultZuulFilter extends ZuulFilter {
             return null;
         }
         
-        System.out.println("ok");
         return null;
 	}
 	

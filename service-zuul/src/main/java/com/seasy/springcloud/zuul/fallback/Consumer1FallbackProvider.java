@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Consumer1FallbackProvider implements FallbackProvider{
-	private String serviceName = "service-consumer-1";
+	private String serviceName = "*";
 	
 	/**
-	 * 为哪个微服务提供回退
+	 * 表明是为哪个微服务提供回退，*表示为所有微服务提供回退
 	 */
 	@Override
 	public String getRoute() {
@@ -22,6 +22,7 @@ public class Consumer1FallbackProvider implements FallbackProvider{
 	
 	@Override
 	public ClientHttpResponse fallbackResponse(String route, Throwable cause) {
-		return new DefaultClientHttpResponse(serviceName);
+		return new DefaultClientHttpResponse(route, cause);
 	}
+	
 }

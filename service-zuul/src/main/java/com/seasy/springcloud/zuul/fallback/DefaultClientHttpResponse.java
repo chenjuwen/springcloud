@@ -10,23 +10,24 @@ import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpResponse;
 
 public class DefaultClientHttpResponse implements ClientHttpResponse {
-	private String serviceName = "";
+	private String route;
+	private Throwable cause;
 	
-	public DefaultClientHttpResponse(String serviceName){
-		this.serviceName = serviceName;
+	public DefaultClientHttpResponse(String route, Throwable cause){
+		this.route = route;
+		this.cause = cause;
 	}
 	
 	@Override
 	public InputStream getBody() throws IOException {
 		//响应体
-		return new ByteArrayInputStream((getServiceName() + " 微服务不可用，请稍后再试").getBytes());
+		return new ByteArrayInputStream((route + " 不可用，请稍后再试").getBytes());
 	}
 
 	@Override
 	public HttpHeaders getHeaders() {
 		HttpHeaders headers = new HttpHeaders();
-		MediaType mediaType = new MediaType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-		headers.setContentType(mediaType);
+		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 		return headers;
 	}
 
@@ -45,16 +46,12 @@ public class DefaultClientHttpResponse implements ClientHttpResponse {
 	@Override
 	public String getStatusText() throws IOException {
 		//状态文本
-		return this.getStatusCode().getReasonPhrase();
+		return this.cause.getMessage();
 	}
 
 	@Override
 	public void close() {
 		
-	}
-
-	public String getServiceName() {
-		return serviceName;
 	}
 
 }
