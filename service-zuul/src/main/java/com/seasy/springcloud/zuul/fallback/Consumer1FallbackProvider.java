@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Consumer1FallbackProvider implements FallbackProvider{
+//	private String serviceName = "service-consumer-1";
 	private String serviceName = "*";
 	
 	/**
@@ -22,6 +23,7 @@ public class Consumer1FallbackProvider implements FallbackProvider{
 	
 	@Override
 	public ClientHttpResponse fallbackResponse(String route, Throwable cause) {
+		System.out.println(route + ": " + cause.getMessage());
 		return new DefaultClientHttpResponse(route, cause);
 	}
 	

@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,8 +22,19 @@ public class DefaultClientHttpResponse implements ClientHttpResponse {
 	
 	@Override
 	public InputStream getBody() throws IOException {
+		String result = "";
+		try {
+			JSONObject object = new JSONObject();
+			object.put("code", "999");
+			object.put("message", route + " 不可用!");
+			result = object.toString();
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
 		//响应体
-		return new ByteArrayInputStream((route + " 不可用，请稍后再试").getBytes());
+		return new ByteArrayInputStream(result.getBytes());
 	}
 
 	@Override
@@ -46,7 +59,7 @@ public class DefaultClientHttpResponse implements ClientHttpResponse {
 	@Override
 	public String getStatusText() throws IOException {
 		//状态文本
-		return this.cause.getMessage();
+		return this.getStatusCode().getReasonPhrase();
 	}
 
 	@Override
