@@ -1,5 +1,7 @@
 package com.seasy.springcloud.gateway.filter;
 
+import java.util.List;
+
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +17,17 @@ import reactor.core.publisher.Mono;
 public class DefaultGlobalFilter implements GlobalFilter {
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		ServerHttpRequest.Builder builder = exchange.getRequest().mutate();
+		System.out.println("DefaultGlobalFilter...");
+		
+		ServerHttpRequest request = exchange.getRequest();
+		
+		List<String> list = request.getHeaders().get("X-Request-Foo");
+		System.out.println(list);
+		
+		list = request.getQueryParams().get("foo");
+		System.out.println(list);
+		
+		ServerHttpRequest.Builder builder = request.mutate();
 		builder.header("GlobalFilter","GlobalFilter success");
 		chain.filter(exchange.mutate().request(builder.build()).build());
 		return chain.filter(exchange.mutate().request(builder.build()).build());

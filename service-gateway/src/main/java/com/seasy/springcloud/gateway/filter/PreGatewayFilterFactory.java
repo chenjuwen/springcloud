@@ -11,6 +11,8 @@ public class PreGatewayFilterFactory extends AbstractGatewayFilterFactory<PreGat
 	
 	@Override
 	public GatewayFilter apply(Config config) {
+		System.out.println("PreGatewayFilterFactory...");
+		
 		return (exchange, chain) -> {
 			ServerHttpRequest.Builder builder = exchange.getRequest().mutate();
 			builder.header("GatewayFilter", "PreGatewayFilterFactory success");
