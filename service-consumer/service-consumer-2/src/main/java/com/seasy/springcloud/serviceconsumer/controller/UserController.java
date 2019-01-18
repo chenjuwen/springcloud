@@ -21,6 +21,7 @@ public class UserController {
 		//addUser
 		String result = userFeignClient.addUser(22L);
 		System.out.println("result=" + result);
+		result = "9002: " + System.currentTimeMillis();
 		return result;
 	}
 	

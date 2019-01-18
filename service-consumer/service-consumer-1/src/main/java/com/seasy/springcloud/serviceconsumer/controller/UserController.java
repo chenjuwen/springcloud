@@ -23,6 +23,12 @@ public class UserController {
 	@Autowired
     private RestTemplate restTemplate;
 
+	@GetMapping("/addUser")
+	public String addUser(){
+		String result = "9001: " + System.currentTimeMillis();
+		return result;
+	}
+	
 	/**
 	 * 通过@HystrixCommand注解为业务方法指定回退方法
 	 * 		fallbackMethod: 回退方法
@@ -35,6 +41,7 @@ public class UserController {
 	@GetMapping("/getUserById/{id}")
 	public String getUserById(@PathVariable Long id){
 		String result = restTemplate.getForObject(baseURL + "/user/{id}", String.class, id);
+		result += ", " + System.currentTimeMillis();
 		return result;
 	}
 	
