@@ -19,15 +19,25 @@ spring:
         locator:
           enabled: true
           lowerCaseServiceId: true
-#      routes:
-#        - id: a
+      routes:
+        - id: a
 #          uri: http://localhost:9001
-#          uri: lb://SERVICE-CONSUMER-1
-#          uri: lb://service-consumer-1
-#          predicates:
-#            - Path=/cjm/**
-#          filters:
-#            - StripPrefix=1
+          uri: lb://service-consumer-1   #负载均衡
+          predicates:
+            - Path=/cjm/**
+          filters:
+            - StripPrefix=1
+            - name: Hystrix  #配置服务熔断器
+              args:
+                name: hystrixCommand  #断路器名
+                fallbackUri: forward:/hystrixCommandFallback  #回退方法
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
       
 logging:
   level:
