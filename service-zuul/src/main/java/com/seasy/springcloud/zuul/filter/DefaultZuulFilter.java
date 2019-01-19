@@ -3,7 +3,6 @@ package com.seasy.springcloud.zuul.filter;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
-import org.springframework.stereotype.Component;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
@@ -11,7 +10,7 @@ import com.netflix.zuul.context.RequestContext;
 /**
  * 自定义Filter
  */
-@Component
+//@Component
 public class DefaultZuulFilter extends ZuulFilter {
 	/**
 	 * 过滤器类型，它决定过滤器在请求的哪个生命周期中执行。
@@ -55,12 +54,13 @@ public class DefaultZuulFilter extends ZuulFilter {
         if(accessToken == null) {
             requestContext.setSendZuulResponse(false); //过滤该请求，不对其进行路由
             requestContext.setResponseStatusCode(401); //返回的错误码
-            
-            try {
-                requestContext.getResponse().getWriter().write("token is empty");
-            }catch (Exception ex){
-            	ex.printStackTrace();
-            }
+            requestContext.setResponseBody("token is empty!!!");
+            requestContext.set("isSuccess", false);
+//            try {
+//                requestContext.getResponse().getWriter().write("token is empty");
+//            }catch (Exception ex){
+//            	ex.printStackTrace();
+//            }
             
             return null;
         }

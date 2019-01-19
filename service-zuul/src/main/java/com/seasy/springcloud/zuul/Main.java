@@ -8,6 +8,9 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
 
 import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;
+import com.netflix.loadbalancer.IRule;
+import com.netflix.loadbalancer.RandomRule;
+import com.seasy.springcloud.zuul.filter.DefaultZuulFilter;
 
 @SpringBootApplication
 @EnableEurekaClient
@@ -26,5 +29,21 @@ public class Main {
 	    registrationBean.setName("hystrixMetricsStreamServlet");  
 	    return registrationBean;  
 	} 
+	
+	/**
+	 * 更改zull的服务路由的负载均衡策略
+	 */
+	@Bean
+	public IRule feignRule(){
+	    return new RandomRule();
+	}
+	
+	/**
+	 * 开启过滤器
+	 */
+	@Bean
+	public DefaultZuulFilter getDefaultZuulFilter() {
+	    return new DefaultZuulFilter();
+	}
 	
 }
