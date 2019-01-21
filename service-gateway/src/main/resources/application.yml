@@ -24,9 +24,9 @@ spring:
           args:
             name: hystrixCommand
             fallbackUri: forward:/hystrixCommandFallback
-        - name: Custom1
-          args:
-            message: message value
+#        - name: Custom1
+#          args:
+#            message: message value
       routes:
         - id: a
 #          uri: http://localhost:9001
@@ -39,6 +39,9 @@ spring:
               args:
                 name: hystrixCommand  #熔断器名
                 fallbackUri: forward:/hystrixCommandFallback  #回退方法
+            - name: Custom1
+              args:
+                message: message value
 
 hystrix:
   command:
