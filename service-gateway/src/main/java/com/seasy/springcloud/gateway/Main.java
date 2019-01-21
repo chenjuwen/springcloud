@@ -9,6 +9,7 @@ import org.springframework.core.annotation.Order;
 import com.netflix.loadbalancer.IRule;
 import com.netflix.loadbalancer.RandomRule;
 import com.seasy.springcloud.gateway.filter.AuthFilter;
+import com.seasy.springcloud.gateway.filter.Custom1GatewayFilterFactory;
 import com.seasy.springcloud.gateway.filter.DefaultGlobalFilter;
 
 @SpringBootApplication
@@ -27,7 +28,7 @@ public class Main {
 	}
 	
 	/**
-	 * 过滤器
+	 * 自定义过滤器
 	 */
 	@Bean
 	@Order(0) //指定执行的顺序：数字越小，优先级越高
@@ -39,6 +40,11 @@ public class Main {
 	@Order(1)
 	public DefaultGlobalFilter getDefaultGlobalFilter(){
 		return new DefaultGlobalFilter();
+	}
+	
+	@Bean
+	public Custom1GatewayFilterFactory getPreGatewayFilterFactory(){
+		return new Custom1GatewayFilterFactory();
 	}
 	
 }

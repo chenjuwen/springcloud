@@ -37,6 +37,7 @@ public class AuthFilter implements GlobalFilter {
         DataBuffer dataBuffer = httpResponse.bufferFactory().wrap(dataArr);
         httpResponse.setStatusCode(HttpStatus.UNAUTHORIZED);
         httpResponse.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
+        httpResponse.getHeaders().add("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
         return httpResponse.writeWith(Mono.just(dataBuffer));
 	}
 }
