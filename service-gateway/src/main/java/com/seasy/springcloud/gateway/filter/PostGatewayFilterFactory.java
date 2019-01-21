@@ -18,12 +18,14 @@ public class PostGatewayFilterFactory extends AbstractGatewayFilterFactory<PostG
 		System.out.println("PostGatewayFilterFactory...");
 		
 		return (exchange, chain) -> {
-			return chain.filter(exchange).then(Mono.fromRunnable(() -> {
-				ServerHttpResponse response = exchange.getResponse();
-				
-				List<String> list = response.getHeaders().get("X-Response-Foo");
-				System.out.println(list);
-			}));
+			//在then里面的代码为post的生命周期
+			return chain.filter(exchange).then(
+				Mono.fromRunnable(() -> {
+					ServerHttpResponse response = exchange.getResponse();
+					List<String> list = response.getHeaders().get("GatewayFilter");
+					System.out.println(list);
+				})
+			);
 		};
 	}
 	
