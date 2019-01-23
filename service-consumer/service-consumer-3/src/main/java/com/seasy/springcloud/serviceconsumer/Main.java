@@ -24,10 +24,10 @@ public class Main {
 		SpringApplication.run(Main.class, args);
 	}
 	
-	@Bean
-	public IRule feignRule(){
-	    return new RandomRule();
-	}
+//	@Bean
+//	public IRule feignRule(){
+//	    return new RandomRule();
+//	}
 	
 	/**
 	 * SpringBoot2+版本需要手动配置hystrix.stream端点

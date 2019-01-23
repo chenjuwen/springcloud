@@ -53,7 +53,7 @@ public class UserController {
 		userFeignClient.put(address);
 		*/
 		
-		return "ok: " + System.currentTimeMillis();
+		return "ok: " + result + ", " + System.currentTimeMillis();
 	}
 	
 }
