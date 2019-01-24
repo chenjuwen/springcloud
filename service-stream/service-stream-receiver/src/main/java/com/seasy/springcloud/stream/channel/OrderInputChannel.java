@@ -3,10 +3,10 @@ package com.seasy.springcloud.stream.channel;
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.messaging.SubscribableChannel;
 
-public interface OrderChannel {
-	String INPUT2 = "input2";
+public interface OrderInputChannel {
+	String INPUT = "input";
 	
-	@Input(OrderChannel.INPUT2)
+	@Input(OrderInputChannel.INPUT)
 	SubscribableChannel input();
 	
 }

@@ -14,6 +14,7 @@ spring:
       bindings:
         input: #通道名
           destination: order  #目的地
-          content-type: text/plain
+#          content-type: text/plain
+          content-type: application/json
           group: default
           
