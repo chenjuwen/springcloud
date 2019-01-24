@@ -11,10 +11,12 @@ spring:
     password: guest
   cloud:
     stream:
+      default-binder: rabbit  #默认的绑定器
       bindings:
         output: #通道名
+#          binder: rabbit  #通道绑定的Binder
           destination: order  #目的地
 #          content-type: text/plain
           content-type: application/json  #消息格式
-          group: default
+          group: default  #消费组名
           

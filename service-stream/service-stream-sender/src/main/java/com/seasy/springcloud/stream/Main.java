@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.seasy.springcloud.stream.bean.User;
 import com.seasy.springcloud.stream.channel.OrderOutputChannel;
 
+/**
+ * 发送消息
+ */
 @SpringBootApplication
 @RestController
-@EnableBinding(OrderOutputChannel.class) //启动与消息中间件的绑定
+@EnableBinding(OrderOutputChannel.class) //启用与消息通道的绑定
 public class Main {
 	/**
 	 * 消息channel

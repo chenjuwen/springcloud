@@ -11,11 +11,11 @@ import com.seasy.springcloud.stream.bean.User;
 import com.seasy.springcloud.stream.channel.OrderInputChannel;
 
 /**
- * 订阅、接收消息
+ * 接收消息
  */
 @SpringBootApplication
 @RestController
-@EnableBinding({OrderInputChannel.class}) //启动与消息中间件的绑定
+@EnableBinding({OrderInputChannel.class}) //启用与消息通道的绑定
 public class Main {
 	private String message = "";
 	
@@ -29,7 +29,7 @@ public class Main {
 	}
 	
 	/**
-	 * 监听指定Channel，通过该Channel从目的地获取消息
+	 * 监听指定通道，通过该通道接收指定目的地的消息
 	 */
 	@StreamListener(OrderInputChannel.INPUT)
     public void receive(String payload) {
