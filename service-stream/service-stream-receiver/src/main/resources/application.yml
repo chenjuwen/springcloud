@@ -1,0 +1,19 @@
+server:
+  port: 5501
+  
+spring:
+  application:
+    name: service-stream-receiver
+  rabbitmq:
+    host: 192.168.134.134
+    port: 5672
+    username: guest
+    password: guest
+  cloud:
+    stream:
+      bindings:
+        input: #通道名
+          destination: order  #目的地
+          content-type: text/plain
+          group: default
+          
