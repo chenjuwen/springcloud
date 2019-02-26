@@ -1,0 +1,35 @@
+server:
+  port: 8001
+  
+spring:
+  application:
+    name: service-provider-1
+#  sleuth:
+#    sampler:
+#      probability: 1.0
+#  zipkin:
+#    base-url: http://localhost:9411/
+
+eureka:
+  instance:
+    hostname: ${spring.cloud.client.ip-address}
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://root:123456@${eureka.instance.hostname}:7001/eureka/
+
+#开启所有的管理端点给Admin Server进行监控
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    
