@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasy.mybatis.mapper.UsersMapper" >
+	<resultMap id="resultMap" type="com.seasy.mybatis.entity.UsersEntity">
+		<id property="id" column="USER_ID" jdbcType="BIGINT" />
+		<result property="loginName" column="LOGIN_NAME" jdbcType="VARCHAR" />
+		<result property="password" column="PASSWORD" jdbcType="VARCHAR" />
+		<result property="salt" column="SALT" jdbcType="VARCHAR" />
+		<result property="enabled" column="ENABLED" jdbcType="BIGINT" />
+  	</resultMap>
+  
+  	<sql id="sql_column_list">
+    	USER_ID, LOGIN_NAME, PASSWORD, SALT, ENABLED
+  	</sql>
+  
+  	<select id="selectByLoginName" resultMap="resultMap" parameterType="String">
+    	select
+    	<include refid="sql_column_list" />
+    	from USERS
+    	where LOGIN_NAME = #{value}
+  	</select>
+  	
+	<select id="getAllRoleByUserId" parameterType="long" resultType="com.seasy.mybatis.entity.RolesEntity">
+		select 
+		  	distinct
+			a.ROLE_ID as id,
+			a.ROLE_NO as roleNo,
+			a.ROLE_NAME as roleName,
+			a.ROLE_DESC as roleDesc
+		from ROLES a
+		inner join user_role b on a.ROLE_ID=b.role_id
+		where b.user_id = #{value}
+	</select>
+  	
+</mapper>
