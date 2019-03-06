@@ -29,7 +29,7 @@ import com.seasy.shiro.filter.SeasyRoleAuthorizationFilter;
 public class ShiroConfig {
 	private static final String LOGIN_URL = "/login";
 	public static final String LOGIN_SUCCESS_URL = "/index";
-	public static final String PAGE_403 = "/common/403.jsp";
+	public static final String PAGE_403 = "/pages/common/403.jsp";
 	
 	@Bean  
     public FilterRegistrationBean filterRegistrationBean() {
@@ -61,7 +61,7 @@ public class ShiroConfig {
         mapping.put("/js/**", "anon");
         mapping.put("/common/**", "anon");
         mapping.put("/kaptcha/**", "anon");
-        mapping.put("/getUser", "anyRole[admin,user]");
+        mapping.put("/admin/**", "anyRole[admin,test]");
         mapping.put("/logout*", "logout");
         mapping.put("/**", "authc");
         

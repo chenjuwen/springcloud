@@ -13,7 +13,7 @@
     	USER_ID, LOGIN_NAME, PASSWORD, SALT, ENABLED
   	</sql>
   
-  	<select id="selectByLoginName" resultMap="resultMap" parameterType="String">
+  	<select id="getUserByLoginName" resultMap="resultMap" parameterType="String">
     	select
     	<include refid="sql_column_list" />
     	from USERS

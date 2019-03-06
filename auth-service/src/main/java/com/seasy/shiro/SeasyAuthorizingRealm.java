@@ -86,7 +86,7 @@ public class SeasyAuthorizingRealm extends AuthorizingRealm {
 			}
 
 			//验证用户名是否存在
-			UsersEntity user = userService.selectByLoginName(token.getUsername());
+			UsersEntity user = userService.getUserByLoginName(token.getUsername());
 			if(user == null){
 				setSessionAttribute(SecurityConstants.SESSION_ATTR_KEY__ERRORMSG, SecurityConstants.ERROR_USERNAME_PASSWORD);
 				return null;

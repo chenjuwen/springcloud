@@ -21,8 +21,8 @@ public class UserService {
 	@Autowired
 	private EncryptionPolicy encryptionPolicy;
 
-	public UsersEntity selectByLoginName(String loginName) {
-		List<UsersEntity> userList = usersMapper.selectByLoginName(loginName);
+	public UsersEntity getUserByLoginName(String loginName) {
+		List<UsersEntity> userList = usersMapper.getUserByLoginName(loginName);
 		if(!CollectionUtils.isEmpty(userList)){
 			return userList.get(0);
 		}

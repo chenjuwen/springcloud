@@ -14,23 +14,19 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
 	}
 	
 	public static ApplicationContext getApplicationContext(){
-		checkApplicationContext();
 		return applicationContext;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static <T> T getBean(String name){
-		checkApplicationContext();
 		return (T)applicationContext.getBean(name);
 	}
 	
 	public static <T> T getBean(Class<T> clazz){
-		checkApplicationContext();
 		return applicationContext.getBean(clazz);
 	}
 	
 	public static <T> T getBean(String name, Class<T> clazz){
-		checkApplicationContext();
 		return applicationContext.getBean(name, clazz);
 	}
 	
@@ -38,11 +34,5 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
 	public void destroy() throws Exception {
 		applicationContext = null;
 	}
-	
-	private static void checkApplicationContext() {
-        if (applicationContext == null) {
-            throw new IllegalStateException("applicaitonContext is null");
-        }
-    }
 	
 }

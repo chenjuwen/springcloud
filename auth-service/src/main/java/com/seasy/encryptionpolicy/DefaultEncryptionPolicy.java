@@ -7,23 +7,22 @@ import org.apache.commons.codec.binary.Hex;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 
-import com.seasy.common.SeasyConstants;
+import com.seasy.common.ShiroConstants;
 import com.seasy.utils.StringUtil;
 
 public class DefaultEncryptionPolicy implements EncryptionPolicy {
 	/**
 	 * 加密明文密码
-	 * 
 	 * @param password 明文密码
 	 */
 	@Override
 	public EncryptionResult encrypt(String password) {
 		if(StringUtil.isEmpty(password)){
-			password = SeasyConstants.DEFAULT_PASSWORD;
+			password = ShiroConstants.DEFAULT_PASSWORD;
 		}
 		
 		SecureRandom random = new SecureRandom();
-		byte[] salt = new byte[SeasyConstants.DIGESTS_SALT_SIZE];
+		byte[] salt = new byte[ShiroConstants.DIGESTS_SALT_SIZE];
 	    random.nextBytes(salt);
 	    
 		String saltValue = Hex.encodeHexString(salt);
@@ -33,7 +32,6 @@ public class DefaultEncryptionPolicy implements EncryptionPolicy {
 
 	/**
 	 * 加密明文密码
-	 * 
 	 * @param password 明文密码
 	 * @param saltValue 盐值
 	 */
@@ -41,12 +39,11 @@ public class DefaultEncryptionPolicy implements EncryptionPolicy {
 	public EncryptionResult encrypt(String password, String saltValue) {
 		try{
 			byte[] salt = Hex.decodeHex(saltValue);
-			byte[] passwordByte = sha1(password.getBytes(), SeasyConstants.HASH_ALGORITHM, salt, SeasyConstants.DIGESTS_SHA1_ITERATIONS);
+			byte[] passwordByte = sha1(password.getBytes(), ShiroConstants.HASH_ALGORITHM, salt, ShiroConstants.DIGESTS_SHA1_ITERATIONS);
 			String passwordStr = Hex.encodeHexString(passwordByte);
 			
 			EncryptionResult result = new EncryptionResult(saltValue, passwordStr);
 			return result;
-			
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
@@ -85,8 +82,8 @@ public class DefaultEncryptionPolicy implements EncryptionPolicy {
 	 */
 	@Override
 	public CredentialsMatcher getCredentialsMatcher() {
-		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(SeasyConstants.HASH_ALGORITHM);
-		matcher.setHashIterations(SeasyConstants.DIGESTS_SHA1_ITERATIONS);
+		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(ShiroConstants.HASH_ALGORITHM);
+		matcher.setHashIterations(ShiroConstants.DIGESTS_SHA1_ITERATIONS);
 		return matcher;
 	}
 

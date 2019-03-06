@@ -9,7 +9,7 @@
   	</head>
 	<body>
 	<form id="loginForm" name="loginForm" method="post" action="<c:url value="/login"/>">
-		<table>
+		<table border=0>
 			<tr>
 				<td align="right" width="70">帐&nbsp;号:</td>
 				<td><input type="text" id="username" name="username"/></td>
@@ -36,8 +36,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
-					<input type="button" value="登录" onclick="_login();">
+				<td colspan="2" align="center">
+					<input type="button" value=" 登 录 " onclick="_login();">
 				</td>
 			</tr>
 		</table>
