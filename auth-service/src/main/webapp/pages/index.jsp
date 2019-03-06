@@ -6,11 +6,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </header>
 <body>
-	<%
-		String contextPath = request.getContextPath();
-	%>
-	<a href="<%=contextPath%>/logout">Logout</a>
-	<shiro:principal property="username"/>
-	<shiro:authenticated>已登录</shiro:authenticated>
+	<shiro:principal property="loginName"/>
+	
+	<shiro:authenticated>
+		已登录<br><br>
+		<a href="<%=request.getContextPath()%>/logout">Logout</a>
+	</shiro:authenticated>
 </body>
 </html>

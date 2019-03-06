@@ -58,12 +58,11 @@ public class ShiroConfig {
         //拦截器
         Map<String,String> mapping = new LinkedHashMap<String,String>();
         mapping.put(LOGIN_URL, "authc");
-        mapping.put("/index", "authc");
-        mapping.put("/logout*", "logout");
         mapping.put("/js/**", "anon");
         mapping.put("/common/**", "anon");
         mapping.put("/kaptcha/**", "anon");
         mapping.put("/getUser", "anyRole[admin,user]");
+        mapping.put("/logout*", "logout");
         mapping.put("/**", "authc");
         
         bean.setFilterChainDefinitionMap(mapping);

@@ -37,39 +37,36 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="submit" value="登录">
+					<input type="button" value="登录" onclick="_login();">
 				</td>
 			</tr>
 		</table>
     </form>
     
-		
-		<script type="text/javascript">
-			jQuery(function(){
-			    jQuery("#username").focus();
-			    
-			    var img = jQuery("#captchaImg");
-				img.click(function(){
-					var url = img.attr("src");
-					url = url.substring(0, url.indexOf("?")) + "?r=" + Math.random();
-					img.attr("src",url);
-				});
-				
-				//确保重新登录时在顶级窗口显示登录页面
-				var url = window.location.href;
-				if(url.indexOf("login") == -1){
-					top.location.href = "<c:url value="/index.jsp"/>";
-				}
+	<script type="text/javascript">
+		function _login(){
+			jQuery("#loginForm").submit();
+		}
+	
+		jQuery(function(){
+		    jQuery("#username").focus();
+		    
+		    var img = jQuery("#captchaImg");
+			img.click(function(){
+				var url = img.attr("src");
+				url = url.substring(0, url.indexOf("?")) + "?r=" + Math.random();
+				img.attr("src",url);
 			});
-			
-			document.onkeydown = function(e){
-			    var event = e || window.event;  
-			    var code = event.keyCode || event.which || event.charCode;
-			    if (code == 13) {
-			    	_login();
-			    }
-			}
-		</script>
+		});
+
+		document.onkeydown = function(e){
+		    var event = e || window.event;  
+		    var code = event.keyCode || event.which || event.charCode;
+		    if (code == 13) {
+		    	_login();
+		    }
+		}
+	</script>
 		
 	</body>
 </html>

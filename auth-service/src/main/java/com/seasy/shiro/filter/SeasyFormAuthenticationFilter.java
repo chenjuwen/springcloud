@@ -37,6 +37,7 @@ public class SeasyFormAuthenticationFilter extends FormAuthenticationFilter {
 	}
 
 	protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
+		System.out.println("1. create AuthenticationToken ...");
 		String username = getUsername(request);
 		String password = getPassword(request);
 		String captcha = getCaptcha(request);
@@ -44,9 +45,9 @@ public class SeasyFormAuthenticationFilter extends FormAuthenticationFilter {
 		
 		if (StringUtil.isEmpty(password)) {
 			char[] passwordArray = new char[0];
-			return new SeasyUsernamePasswordToken(username, passwordArray, false, host, captcha);
+			return new SeasyUsernamePasswordToken(username, passwordArray, true, host, captcha);
 		} else {
-			return new SeasyUsernamePasswordToken(username, password.toCharArray(), false, host, captcha);
+			return new SeasyUsernamePasswordToken(username, password.toCharArray(), true, host, captcha);
 		}
 	}
 
@@ -56,6 +57,7 @@ public class SeasyFormAuthenticationFilter extends FormAuthenticationFilter {
 	@Override
 	protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest req,
 			ServletResponse resp) throws Exception {
+		System.out.println("3. onLoginSuccess ...");
 		HttpServletRequest request = (HttpServletRequest)req;
         HttpServletResponse response = (HttpServletResponse)resp;
         
@@ -82,12 +84,12 @@ public class SeasyFormAuthenticationFilter extends FormAuthenticationFilter {
 	protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request,
 			ServletResponse response) {
 		try{
+			System.out.println("onLoginFailure ...");
 	        HttpServletRequest req = (HttpServletRequest)request;
 	        String errorMessage = (String)req.getSession().getAttribute(SecurityConstants.SESSION_ATTR_KEY__ERRORMSG);
 	        
 	        if(StringUtil.isEmpty(errorMessage)){
 				if(e instanceof CredentialsException){
-			        req.getSession().setAttribute(SecurityConstants.SESSION_ATTR_KEY__ERRORTYPE, "username");
 			        req.getSession().setAttribute(SecurityConstants.SESSION_ATTR_KEY__ERRORMSG, SecurityConstants.ERROR_USERNAME_PASSWORD);
 				}
 	        }

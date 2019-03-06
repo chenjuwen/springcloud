@@ -26,6 +26,7 @@ public class SeasyRoleAuthorizationFilter extends SeasyAuthorizationFilter {
 	 */
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
+		System.out.println("isAccessAllowed ...");
 		Subject subject = SecurityUtils.getSubject();
 		
 		//角色权限判断 
@@ -57,6 +58,7 @@ public class SeasyRoleAuthorizationFilter extends SeasyAuthorizationFilter {
 	 */
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
+		System.out.println("onAccessDenied ...");
 		if(getUnauthorizedUrl() != null){
 			WebUtils.issueRedirect(request, response, getUnauthorizedUrl());
 		}else{

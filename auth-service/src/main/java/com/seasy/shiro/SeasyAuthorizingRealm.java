@@ -32,6 +32,14 @@ public class SeasyAuthorizingRealm extends AuthorizingRealm {
 	@Autowired
 	private UserService userService;
 
+	public void setSessionAttribute(String key, Object value) {
+		SecurityUtils.getSubject().getSession().setAttribute(key, value);
+	}
+	
+	public void removeSessionAttribute(String key){
+		SecurityUtils.getSubject().getSession().removeAttribute(key);
+	}
+	
 	/**
 	 * CredentialsMatcher：密码匹配
 	 * 设定Password校验的Hash算法与迭代次数
@@ -48,43 +56,45 @@ public class SeasyAuthorizingRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) {
 		SeasyUsernamePasswordToken token = null;
 		try {
+			System.out.println("2. doGetAuthenticationInfo ...");
+			removeSessionAttribute(SecurityConstants.SESSION_ATTR_KEY__ERRORMSG);
+			
 			token = (SeasyUsernamePasswordToken) authcToken;
 			
 			//用户名和密码的判断
 			if (StringUtil.isEmpty(token.getUsername()) || null == token.getPassword()
 					|| 0 == token.getPassword().length) {
+				setSessionAttribute(SecurityConstants.SESSION_ATTR_KEY__ERRORMSG, SecurityConstants.ERROR_USERNAME_PASSWORD);
 				return null;
 			}
 			
 			//验证码的判断
 			if (StringUtil.isEmpty(token.getCaptcha())) {
+				setSessionAttribute(SecurityConstants.SESSION_ATTR_KEY__ERRORMSG, SecurityConstants.ERROR_CAPTCHA);
 				return null;
 			}
 
 			token.setCaptcha(token.getCaptcha().toLowerCase());
 
 			//验证码是否正确
-			try {
-				//从Session获取验证码
-				String captchaId = (String)SecurityUtils.getSubject().getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
-				
-				//判断用户输入的验证码是否正确
-				if (!token.getCaptcha().equalsIgnoreCase(captchaId)) {
-					return null;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+			String captchaId = (String)SecurityUtils.getSubject().getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+			
+			//判断用户输入的验证码是否正确
+			if (!token.getCaptcha().equalsIgnoreCase(captchaId)) {
+				setSessionAttribute(SecurityConstants.SESSION_ATTR_KEY__ERRORMSG, SecurityConstants.ERROR_CAPTCHA);
 				return null;
 			}
 
 			//验证用户名是否存在
 			UsersEntity user = userService.selectByLoginName(token.getUsername());
 			if(user == null){
+				setSessionAttribute(SecurityConstants.SESSION_ATTR_KEY__ERRORMSG, SecurityConstants.ERROR_USERNAME_PASSWORD);
 				return null;
 			}
 			
 			//状态是否禁用
 			if(1 != user.getEnabled()){
+				setSessionAttribute(SecurityConstants.SESSION_ATTR_KEY__ERRORMSG, SecurityConstants.ERROR_STATUS);
 				return null;
 			}
 			
@@ -98,6 +108,7 @@ public class SeasyAuthorizingRealm extends AuthorizingRealm {
 
 		} catch (Exception e) {
 			logger.error("doGetAuthenticationInfo error", e);
+			setSessionAttribute(SecurityConstants.SESSION_ATTR_KEY__ERRORMSG, "登录失败: " + e.getMessage());
 			return null;
 		}
 	}
@@ -108,6 +119,7 @@ public class SeasyAuthorizingRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		try {
+			System.out.println("doGetAuthorizationInfo ...");
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 			
 			SecurityUser securityUser = (SecurityUser)principals.getPrimaryPrincipal();
