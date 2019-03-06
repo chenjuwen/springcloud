@@ -6,137 +6,79 @@ import java.util.Map;
 
 import javax.servlet.Filter;
 
-import org.apache.shiro.cache.ehcache.EhCacheManager;
-import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
+import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.ApplicationContext;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.web.filter.DelegatingFilterProxy;
-
-import com.seasy.common.SpringContextHolder;
-import com.seasy.service.UserService;
-import com.seasy.shiro.filter.SeasyFormAuthenticationFilter;
-import com.seasy.shiro.filter.SeasyRoleAuthorizationFilter;
 
 @Configuration
 public class ShiroConfig {
-	private static final String LOGIN_URL = "/login";
-	public static final String LOGIN_SUCCESS_URL = "/index";
-	public static final String PAGE_403 = "/pages/common/403.jsp";
-	
-	@Bean  
-    public FilterRegistrationBean filterRegistrationBean() {
-        FilterRegistrationBean bean = new FilterRegistrationBean();
-        bean.setName("shiroDelegatingFilter");
-        bean.setFilter(new DelegatingFilterProxy("shiroFilter"));
-        bean.addUrlPatterns("/*");
-        return bean;  
+    @Bean
+    public DefaultWebSecurityManager getSecurityManager(){
+        DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
+        securityManager.setRealm(new JWTRealm());
+        
+        //shiro的集成方式为无状态(禁用session)，通过每次请求带上token进行鉴权
+        //DefaultSessionStorageEvaluator 用于判断 Subject 是否可以使用 Session 来保存其内部状态
+        DefaultSessionStorageEvaluator defaultSessionStorageEvaluator = new DefaultSessionStorageEvaluator();
+        defaultSessionStorageEvaluator.setSessionStorageEnabled(false); //Subject不被存储到Session
+        
+        DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
+        subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);
+        
+        securityManager.setSubjectDAO(subjectDAO);
+        
+        return securityManager;
     }
 
 	@Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean shiroFilter(ApplicationContext context) {
-        ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
-        bean.setLoginUrl(LOGIN_URL);
-        bean.setSuccessUrl(LOGIN_SUCCESS_URL);
-        bean.setUnauthorizedUrl(PAGE_403);
-        
-        bean.setSecurityManager(getSecurityManager());
-        
-        Map<String, Filter> filters = new HashMap<>();
-        filters.put("authc", seasyFormAuthenticationFilter(context));
-        filters.put("anyRole", seasyRoleAuthenticationFilter());
-        filters.put("logout", seasyLogoutFilter());
-        bean.setFilters(filters);
-        
-        //拦截器
-        Map<String,String> mapping = new LinkedHashMap<String,String>();
-        mapping.put(LOGIN_URL, "authc");
-        mapping.put("/js/**", "anon");
-        mapping.put("/common/**", "anon");
-        mapping.put("/kaptcha/**", "anon");
-        mapping.put("/admin/**", "anyRole[admin,test]");
-        mapping.put("/logout*", "logout");
-        mapping.put("/**", "authc");
-        
-        bean.setFilterChainDefinitionMap(mapping);
-        return bean;
-    }
+    public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager securityManager) {
+        ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
 
-	@Bean
-	public SpringContextHolder getSpringContextHolder(){
-		return new SpringContextHolder();
-	}
-    
-    /**
-     * 安全事务管理器
-     */
-    @Bean
-    public SecurityManager getSecurityManager(){
-        DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
-        securityManager.setCacheManager(getEhCacheManager());
-        securityManager.setRealm(getAuthorizingRealm());
-        securityManager.setSessionManager(getSessionManager());
-        return securityManager;
+        factoryBean.setSecurityManager(securityManager);
+        factoryBean.setUnauthorizedUrl("/401");
+        
+        //不将自定义filter注册到spring bean，而是交由shiroFilter管理
+        Map<String, Filter> filterMap = new HashMap<>();
+        filterMap.put("jwt", new JWTFilter());
+        factoryBean.setFilters(filterMap);
+        
+        //FilterChainDefinition
+        Map<String, String> filterRuleMap = new LinkedHashMap<>();
+        filterRuleMap.put("/**", "jwt");
+        filterRuleMap.put("/401", "anon");
+        factoryBean.setFilterChainDefinitionMap(filterRuleMap);
+        
+        return factoryBean;
     }
 	
-	/**
-	 * 缓存管理器
-	 */
-	@Bean(name="ehCacheManager")
-    public EhCacheManager getEhCacheManager(){
-        EhCacheManager ehCacheManager = new EhCacheManager();  
-        ehCacheManager.setCacheManagerConfigFile("classpath:ehcache/ehcache-shiro.xml");  
-        return ehCacheManager;  
-    }
-
-	/**
-	 * 权限登录器
-	 */
-    @Bean
-    @DependsOn(value="lifecycleBeanPostProcessor")  
-    public SeasyAuthorizingRealm getAuthorizingRealm(){
-    	SeasyAuthorizingRealm authorizingRealm = new SeasyAuthorizingRealm();
-        return authorizingRealm;
-    }
-    
     @Bean  
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {  
         return new LifecycleBeanPostProcessor();  
     }
-	
-	@Bean(name="sessionManager")
-    public DefaultWebSessionManager getSessionManager() {
-        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        sessionManager.setCacheManager(getEhCacheManager());
-        sessionManager.setGlobalSessionTimeout(30 * 60 * 1000);
-        sessionManager.setDeleteInvalidSessions(true);
-        sessionManager.setSessionValidationSchedulerEnabled(true);
-        return sessionManager;
+    
+    /**
+     * 对shiro鉴权注解进行拦截处理
+     */
+    @Bean
+    @DependsOn("lifecycleBeanPostProcessor")
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
+        return defaultAdvisorAutoProxyCreator;
     }
     
-    public SeasyFormAuthenticationFilter seasyFormAuthenticationFilter(ApplicationContext context){
-    	SeasyFormAuthenticationFilter filter = new SeasyFormAuthenticationFilter();
-    	filter.setUserService(context.getBean(UserService.class));
-    	return filter;
-    }
-    
-    public SeasyRoleAuthorizationFilter seasyRoleAuthenticationFilter(){
-    	SeasyRoleAuthorizationFilter filter = new SeasyRoleAuthorizationFilter();
-    	filter.setUnauthorizedUrl(PAGE_403);
-    	return filter;
-    }
-    
-    public LogoutFilter seasyLogoutFilter(){
-    	LogoutFilter filter = new LogoutFilter();
-    	filter.setRedirectUrl(LOGIN_URL);
-    	return filter;
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
+        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+        advisor.setSecurityManager(securityManager);
+        return advisor;
     }
     
 }

@@ -1,6 +1,6 @@
 package com.seasy.mybatis.entity;
 
-public class RolesEntity extends BaseEntity {
+public class RoleEntity extends BaseEntity {
 	private static final long serialVersionUID = 3881618593057766194L;
 
 	private Long id;
@@ -8,11 +8,11 @@ public class RolesEntity extends BaseEntity {
 	private String roleName; 	//角色名称
 	private String roleDesc; 	//角色描述
 	
-	public RolesEntity(){
+	public RoleEntity(){
 		
 	}
 	
-	public RolesEntity(String roleNo, String roleName, String roleDesc){
+	public RoleEntity(String roleNo, String roleName, String roleDesc){
 		this.roleNo = roleNo;
 		this.roleName = roleName;
 		this.roleDesc = roleDesc;

@@ -1,6 +1,9 @@
 package com.seasy.mybatis.entity;
 
-public class UsersEntity extends BaseEntity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class UserEntity extends BaseEntity {
 	private static final long serialVersionUID = 845288956479462514L;
 
 	private Long id;
@@ -8,6 +11,8 @@ public class UsersEntity extends BaseEntity {
 	private String password; 	//密码
 	private String salt; 	//密码盐值
 	private Integer enabled; 	//状态:0禁用,1启用
+	
+	private List<String> roleList = new ArrayList<>();
 	
 	public Long getId() {
 		return id;
@@ -48,4 +53,13 @@ public class UsersEntity extends BaseEntity {
 	public void setEnabled(Integer enabled) {
 		this.enabled = enabled;
 	}
+
+	public List<String> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<String> roleList) {
+		this.roleList = roleList;
+	}
+	
 }

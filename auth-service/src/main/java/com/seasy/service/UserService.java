@@ -9,11 +9,11 @@ import org.springframework.util.CollectionUtils;
 
 import com.seasy.encryptionpolicy.DefaultEncryptionPolicy;
 import com.seasy.encryptionpolicy.EncryptionPolicy;
-import com.seasy.mybatis.entity.RolesEntity;
-import com.seasy.mybatis.entity.UsersEntity;
+import com.seasy.mybatis.entity.RoleEntity;
+import com.seasy.mybatis.entity.UserEntity;
 import com.seasy.mybatis.mapper.UsersMapper;
 
-@Service("userService")
+@Service
 public class UserService {
 	@Autowired
 	private UsersMapper usersMapper;
@@ -21,16 +21,21 @@ public class UserService {
 	@Autowired
 	private EncryptionPolicy encryptionPolicy;
 
-	public UsersEntity getUserByLoginName(String loginName) {
-		List<UsersEntity> userList = usersMapper.getUserByLoginName(loginName);
+	public UserEntity getUserByLoginName(String loginName) {
+		UserEntity user = null;
+		
+		List<UserEntity> userList = usersMapper.getUserByLoginName(loginName);
 		if(!CollectionUtils.isEmpty(userList)){
-			return userList.get(0);
+			user = userList.get(0);
+			
+			List<RoleEntity> roleList = usersMapper.getAllRoleByUserId(user.getId());
+			if(!CollectionUtils.isEmpty(roleList)){
+				for(RoleEntity role : roleList){
+					user.getRoleList().add(role.getRoleNo());
+				}
+			}
 		}
-		return null;
-	}
-	
-	public List<RolesEntity> getAllRoleByUserId(Long userId) {
-		return usersMapper.getAllRoleByUserId(userId);
+		return user;
 	}
 
 	public EncryptionPolicy getEncryptionPolicy() {
