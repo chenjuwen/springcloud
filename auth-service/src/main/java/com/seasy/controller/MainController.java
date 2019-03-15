@@ -7,11 +7,8 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.seasy.common.LoggerFactory;
@@ -58,12 +55,6 @@ public class MainController {
 		
 		return new ResponseBean(200, "login success", token);
 	}
-
-    @RequestMapping(path = "/401")
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseBean unauthorized() {
-        return new ResponseBean(401, "Unauthorized");
-    }
 
     @GetMapping("/")
     public String index() {

@@ -28,7 +28,7 @@ public class Main {
     public static class SecurityPermitAllConfig extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-        	//permitAll： 无条件允许访问
+        	//permitAll： 允许无条件访问
             http.authorizeRequests().anyRequest().permitAll()
                     .and().csrf().disable();
         }
@@ -44,21 +44,29 @@ public class Main {
         }
  
         @Override
-        protected void configure(HttpSecurity http) throws Exception {
+        protected void configure(HttpSecurity httpSecurity) throws Exception {
         	//登录成功后的处理器类
             SavedRequestAwareAuthenticationSuccessHandler successHandler 
             	= new SavedRequestAwareAuthenticationSuccessHandler();
             
             successHandler.setTargetUrlParameter("redirectTo");
  
-            http.authorizeRequests()
+            httpSecurity.authorizeRequests()
+        			//permitAll： 允许无条件访问
                     .antMatchers(adminContextPath + "/assets/**").permitAll()
                     .antMatchers(adminContextPath + "/login").permitAll()
+                    //除了permitAll外，其他所有请求全部需要鉴权认证
                     .anyRequest().authenticated()
+                    //登录、登出页面
                     .and().formLogin().loginPage(adminContextPath + "/login").successHandler(successHandler)
                     .and().logout().logoutUrl(adminContextPath + "/logout")
+                    //http基本认证
                     .and().httpBasic()
+                    //不需要csrf
                     .and().csrf().disable();
+            
+            //禁用缓存
+            httpSecurity.headers().cacheControl();
         }
     }
 

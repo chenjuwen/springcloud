@@ -40,10 +40,27 @@
 	    <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 	</dependency>
 	
+<!-- 	<dependency> -->
+<!--         <groupId>org.springframework.boot</groupId> -->
+<!--         <artifactId>spring-boot-starter-data-redis-reactive</artifactId> -->
+<!--     </dependency> -->
+    
+	<!-- redis -->
 	<dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
-    </dependency>
+    	<groupId>org.springframework.boot</groupId>
+    	<artifactId>spring-boot-starter-data-redis</artifactId>
+	</dependency>
+	<dependency>
+    	<groupId>org.apache.commons</groupId>
+    	<artifactId>commons-pool2</artifactId>
+	</dependency>
+    
+    <!-- jwt -->
+    <dependency>
+    	<groupId>com.auth0</groupId>
+    	<artifactId>java-jwt</artifactId>
+    	<version>3.7.0</version>
+	</dependency>
 
 	<dependency>
         <groupId>org.springframework.boot</groupId>

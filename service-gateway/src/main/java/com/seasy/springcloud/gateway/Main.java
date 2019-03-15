@@ -30,17 +30,17 @@ public class Main {
 	/**
 	 * 自定义过滤器
 	 */
-	@Bean
-	@Order(0) //指定执行的顺序：数字越小，优先级越高
-	public AuthFilter getAuthFilter(){
-		return new AuthFilter();
-	}
-	
-	@Bean
-	@Order(1)
-	public DefaultGlobalFilter getDefaultGlobalFilter(){
-		return new DefaultGlobalFilter();
-	}
+//	@Bean
+//	@Order(0) //指定执行的顺序：数字越小，优先级越高
+//	public AuthFilter getAuthFilter(){
+//		return new AuthFilter();
+//	}
+//	
+//	@Bean
+//	@Order(1)
+//	public DefaultGlobalFilter getDefaultGlobalFilter(){
+//		return new DefaultGlobalFilter();
+//	}
 	
 	@Bean
 	public Custom1GatewayFilterFactory getPreGatewayFilterFactory(){

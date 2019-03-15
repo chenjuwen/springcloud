@@ -28,6 +28,12 @@ spring:
 #          args:
 #            message: message value
       routes:
+        - id: auth-service
+          predicates:
+            - Path=/auth-service/**
+          uri: lb://auth-service
+          filters:
+            - StripPrefix=1
         - id: a
 #          uri: http://localhost:9001
           uri: lb://service-consumer-1   #负载均衡
@@ -43,14 +49,20 @@ spring:
               args:
                 message: message value
 
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 3000
-      
+  #redis
+  redis:
+    database: 0
+    timeout: 3000ms
+    lettuce:
+      pool:
+        max-active: 100
+        max-wait: -1ms
+        min-idle: 0
+        max-idle: 8
+    sentinel:
+      master: mymaster
+      nodes: 192.168.134.134:26379,192.168.134.134:26380
+
 logging:
   level:
     org.springframework.cloud.gateway: debug
