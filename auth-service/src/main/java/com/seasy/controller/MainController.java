@@ -1,12 +1,12 @@
 package com.seasy.controller;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.subject.Subject;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.concurrent.TimeUnit;
+
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,17 +14,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.seasy.common.LoggerFactory;
 import com.seasy.common.ResponseBean;
 import com.seasy.encryptionpolicy.EncryptionResult;
 import com.seasy.mybatis.entity.UserEntity;
 import com.seasy.service.UserService;
-import com.seasy.utils.StringUtil;
+import com.seasy.utils.JWTUtil;
 
 @RestController
 public class MainController {
+	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+	
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+    StringRedisTemplate redisTemplate;
+	
+	/**
+	 * 登录认证
+	 * @param username 用户名
+	 * @param password 密码
+	 */
 	@GetMapping("/login")
 	public ResponseBean login(@RequestParam String username, @RequestParam String password) {
 		UserEntity userEntity = userService.getUserByLoginName(username);
@@ -36,41 +47,27 @@ public class MainController {
 				return new ResponseBean(200, "username or password error");
 			}
 		}
-		return new ResponseBean(200, "login success");
+		
+		//认证成功后，生成token返回给客户端
+		String token = JWTUtil.generateToken(userEntity.getLoginName());
+		logger.debug(token);
+		
+		//将token放入redis，并设置token的过期时间
+		redisTemplate.opsForValue().set(token, userEntity.getRoles(), 
+				JWTUtil.DEFAULT_TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
+		
+		return new ResponseBean(200, "login success", token);
 	}
-	
-	@GetMapping("/article")
-    public ResponseBean article() {
-        Subject subject = SecurityUtils.getSubject();
-        if (subject.isAuthenticated()) {
-            return new ResponseBean(200, "already login");
-        } else {
-            return new ResponseBean(200, "guest user");
-        }
-    }
-	
-	@GetMapping("/require_auth")
-    @RequiresAuthentication
-    public ResponseBean requireAuth() {
-        return new ResponseBean(200, "authenticated");
-    }
-
-    @GetMapping("/require_role")
-    @RequiresRoles("admin")
-    public ResponseBean requireRole() {
-        return new ResponseBean(200, "require role: admin");
-    }
-
-    @GetMapping("/require_permission")
-    @RequiresPermissions(logical=Logical.AND, value={"view", "edit"})
-    public ResponseBean requirePermission() {
-        return new ResponseBean(200, "permission require edit,view");
-    }
 
     @RequestMapping(path = "/401")
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseBean unauthorized() {
         return new ResponseBean(401, "Unauthorized");
+    }
+
+    @GetMapping("/")
+    public String index() {
+    	return "auth-service: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
     
 }

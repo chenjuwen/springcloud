@@ -4,8 +4,6 @@ import java.security.MessageDigest;
 import java.security.SecureRandom;
 
 import org.apache.commons.codec.binary.Hex;
-import org.apache.shiro.authc.credential.CredentialsMatcher;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 
 import com.seasy.common.ShiroConstants;
 import com.seasy.utils.StringUtil;
@@ -75,16 +73,6 @@ public class DefaultEncryptionPolicy implements EncryptionPolicy {
 	      	ex.printStackTrace();
 	      	return null;
 	    }
-	}
-	
-	/**
-	 * 凭证匹配器
-	 */
-	@Override
-	public CredentialsMatcher getCredentialsMatcher() {
-		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(ShiroConstants.HASH_ALGORITHM);
-		matcher.setHashIterations(ShiroConstants.DIGESTS_SHA1_ITERATIONS);
-		return matcher;
 	}
 
 }

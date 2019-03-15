@@ -2,27 +2,16 @@ package com.seasy.common;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.shiro.ShiroException;
-import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+/**
+ * 全局异常处理器
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(ShiroException.class)
-    public ResponseBean handle401(ShiroException e) {
-        return new ResponseBean(401, e.getMessage());
-    }
-
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(UnauthorizedException.class)
-    public ResponseBean handle401() {
-        return new ResponseBean(401, "Unauthorized");
-    }
-
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseBean globalException(HttpServletRequest request, Throwable ex) {

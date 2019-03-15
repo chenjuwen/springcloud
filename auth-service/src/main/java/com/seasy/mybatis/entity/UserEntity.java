@@ -62,4 +62,15 @@ public class UserEntity extends BaseEntity {
 		this.roleList = roleList;
 	}
 	
+	public String getRoles(){
+		StringBuilder sb = new StringBuilder();
+		for(int i=0; i<roleList.size(); i++){
+			if(i > 0){
+				sb.append(",");
+			}
+			sb.append(roleList.get(i));
+		}
+		return sb.toString();
+	}
+	
 }
