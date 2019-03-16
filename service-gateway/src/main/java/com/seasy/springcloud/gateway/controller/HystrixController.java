@@ -12,7 +12,7 @@ import com.seasy.springcloud.gateway.common.Response;
 public class HystrixController {
 	@GetMapping("/hystrixCommandFallback")
 	public Response hystrixCommandFallback(){
-		Response response = new Response("100", "服务暂时不可用");
+		Response response = new Response(100, "服务暂时不可用");
 		return response;
 	}
 }

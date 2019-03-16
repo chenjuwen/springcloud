@@ -7,7 +7,6 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 
 import com.seasy.springcloud.gateway.common.Response;
@@ -30,7 +29,7 @@ public class AuthFilter implements GlobalFilter {
         }
         
         //响应报文数据
-        Response data = new Response("401", "not exists query param: token");
+        Response data = new Response(401, "not exists query param: token");
         byte[] dataArr = JSONObject.fromObject(data).toString().getBytes(StandardCharsets.UTF_8);
         
         ServerHttpResponse httpResponse = exchange.getResponse();
