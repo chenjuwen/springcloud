@@ -40,11 +40,6 @@
 	    <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 	</dependency>
 	
-<!-- 	<dependency> -->
-<!--         <groupId>org.springframework.boot</groupId> -->
-<!--         <artifactId>spring-boot-starter-data-redis-reactive</artifactId> -->
-<!--     </dependency> -->
-    
 	<!-- redis -->
 	<dependency>
     	<groupId>org.springframework.boot</groupId>

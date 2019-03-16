@@ -31,7 +31,7 @@ public class JWTUtil {
 	}
 	
 	/**
-	 * 验证token是否正确
+	 * 验证token
 	 */
 	public static boolean verify(String token, String username){
 	    try {
