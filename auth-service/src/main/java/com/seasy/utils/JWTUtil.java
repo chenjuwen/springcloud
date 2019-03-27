@@ -118,17 +118,17 @@ public class JWTUtil {
 		return newSignature.endsWith(signature);
 	}
     
-	public static void main(String[] args) {
-		String token = JWTUtil.generateToken("admin");
-		System.out.println(token);
-		System.out.println(getOriginalHeader(token));
-		System.out.println(getOriginalPayload(token));
-		System.out.println(checkToken(token));
-		
-		String username = JWTUtil.getClaimFromToken(token, "username");
-		System.out.println(username);
-		
-		System.out.println(JWTUtil.verify(token, username));
-	}
+//	public static void main(String[] args) {
+//		String token = JWTUtil.generateToken("admin");
+//		System.out.println(token);
+//		System.out.println(getOriginalHeader(token));
+//		System.out.println(getOriginalPayload(token));
+//		System.out.println(checkToken(token));
+//		
+//		String username = JWTUtil.getClaimFromToken(token, "username");
+//		System.out.println(username);
+//		
+//		System.out.println(JWTUtil.verify(token, username));
+//	}
 
 }
