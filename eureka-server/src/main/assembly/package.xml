@@ -14,7 +14,7 @@
             <outputDirectory>/</outputDirectory>  
             <includes>  
                 <include>run.bat</include>
-                <include>run.sh</include>
+                <include>*.sh</include>
             </includes>  
         </fileSet>
         
