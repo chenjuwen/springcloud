@@ -1,5 +1,7 @@
 package com.seasy.springcloud.eurekaserver.common;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -10,11 +12,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  */
 @EnableWebSecurity
 public class DefaultWebSecurityConfigurer extends WebSecurityConfigurerAdapter{
+	private static Logger logger = LoggerFactory.getLogger(DefaultWebSecurityConfigurer.class);
 	private boolean csrfEnable = false;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		System.out.println("csrfEnable=" + csrfEnable);
+		logger.debug("csrfEnable=" + csrfEnable);
 		if(csrfEnable){
 			enableCSRF(http);
 		}else{
