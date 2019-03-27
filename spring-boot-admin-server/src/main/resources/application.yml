@@ -1,5 +1,5 @@
 server:
-  port: 3030
+  port: 3003
   
 spring:
   application:
@@ -25,8 +25,7 @@ eureka:
     registry-fetch-interval-seconds: 5  #表示eureka client间隔多久去拉取服务注册信息，默认为30秒
     #注册中心地址
     service-url:
-      defaultZone:
-        http://root:123456@${eureka.instance.hostname}:7001/eureka/
+      defaultZone: http://root:123456@${eureka.instance.hostname}:3001/eureka/
 
 #管理端点的配置
 management:
@@ -38,6 +37,9 @@ management:
     health:
       show-details: ALWAYS
 
+logging:
+  config: classpath:logback.xml
+  
 #每个环境的配置根据 '---'分隔符隔开      
 ---
 spring:
@@ -49,5 +51,5 @@ spring:
   #登录admin server需要的用户名和密码
   security:
     user:
-      name: dev
-      password: 123
+      name: admin
+      password: 123456
