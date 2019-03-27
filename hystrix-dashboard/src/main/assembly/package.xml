@@ -1,22 +1,21 @@
 <assembly>  
-	<!-- mvn clean package assembly:assembly -->
+	<!-- mvn clean assembly:assembly -->
     <id>release</id> 
      
-    <!-- 打包成zip文件 -->  
+    <!-- 最终打包成一个用于发布的zip文件 -->  
     <formats>
         <format>zip</format>  
-<!--         <format>dir</format> -->
     </formats>
   	
   	<!-- 文件复制 -->
     <fileSets>
         <fileSet>  
-            <directory>/</directory>    
+            <directory>/</directory>  
+            <outputDirectory>/</outputDirectory>  
             <includes>  
                 <include>run.bat</include>
-                <include>run.sh</include>
-            </includes> 
-            <outputDirectory>/</outputDirectory> 
+                <include>*.sh</include>
+            </includes>  
         </fileSet>
         
         <fileSet>  
@@ -30,10 +29,10 @@
         
         <fileSet>  
             <directory>/target</directory>    
+            <outputDirectory>/</outputDirectory>  
             <includes>  
                 <include>hystrix-dashboard.jar</include>
             </includes> 
-            <outputDirectory>/</outputDirectory> 
         </fileSet>
     </fileSets>  
 </assembly>
