@@ -1,5 +1,5 @@
 server:
-  port: 2001
+  port: 3007
 
 eureka:
   instance: 
@@ -8,7 +8,7 @@ eureka:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://root:123456@${eureka.instance.hostname}:7001/eureka/
+      defaultZone: http://root:123456@${eureka.instance.hostname}:3001/eureka/
   
 spring:
   application:
@@ -35,7 +35,6 @@ spring:
           filters:
             - StripPrefix=1
         - id: a
-#          uri: http://localhost:9001
           uri: lb://service-consumer-1   #负载均衡
           predicates:
             - Path=/cjm/**
@@ -48,6 +47,11 @@ spring:
             - name: Custom1
               args:
                 message: message value
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@remoteAddressKeyResolver}"  #限流的键解析器的Bean名
+                redis-rate-limiter.replenishRate: 1  #令牌桶每秒填充平均速率
+                redis-rate-limiter.burstCapacity: 5  #令牌桶容量
 
   #redis
   redis:
@@ -59,10 +63,16 @@ spring:
         max-wait: -1ms
         min-idle: 0
         max-idle: 8
-    sentinel:
-      master: mymaster
-      nodes: 192.168.134.134:26379,192.168.134.134:26380
+    host: 192.168.134.134
+    port: 7001
+#    sentinel:
+#      master: mymaster
+#      nodes: 192.168.134.134:26379,192.168.134.134:26380
 
 logging:
+  config: config/logback.xml
   level:
-    org.springframework.cloud.gateway: debug
+    root: INFO
+    org.springframework.cloud.gateway: INFO
+    org.springframework.boot.autoconfigure: WARN
+    

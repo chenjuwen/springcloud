@@ -4,13 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.annotation.Order;
 
 import com.netflix.loadbalancer.IRule;
 import com.netflix.loadbalancer.RandomRule;
-import com.seasy.springcloud.gateway.filter.AuthFilter;
 import com.seasy.springcloud.gateway.filter.Custom1GatewayFilterFactory;
-import com.seasy.springcloud.gateway.filter.DefaultGlobalFilter;
 
 @SpringBootApplication
 @EnableEurekaClient

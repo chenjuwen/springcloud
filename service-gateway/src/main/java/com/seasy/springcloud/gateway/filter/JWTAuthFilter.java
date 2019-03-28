@@ -40,7 +40,7 @@ public class JWTAuthFilter implements GlobalFilter, Ordered{
         String token = exchange.getRequest().getHeaders().getFirst("Authorization");
         if(StringUtil.isEmpty(token)){
         	ServerHttpResponse response = exchange.getResponse();
-            response.setStatusCode(HttpStatus.OK);
+            response.setStatusCode(HttpStatus.UNAUTHORIZED);
             response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
             
             Response res = new Response(401, "401 unauthorized");
