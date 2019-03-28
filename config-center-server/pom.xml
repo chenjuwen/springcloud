@@ -58,7 +58,7 @@
   </dependencyManagement>
   
   <build>
-      <finalName>config-center-server</finalName>
+      <finalName>config-center</finalName>
     
       <plugins>
    			<plugin>

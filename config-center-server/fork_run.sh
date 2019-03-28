@@ -1,1 +1,1 @@
-java -Xms128m -Xmx512m -Dfile.encoding=utf-8 -jar config-center-server/config-center-server.jar &
+java -Xms128m -Xmx512m -Dfile.encoding=utf-8 -jar config-center/config-center.jar &
