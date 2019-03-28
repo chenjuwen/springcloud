@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.seasy.springcloud</groupId>
@@ -38,6 +38,13 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
+    
+    <dependency>
+	    <groupId>net.sf.json-lib</groupId>
+	    <artifactId>json-lib</artifactId>
+	    <version>2.4</version>
+  		<classifier>jdk15</classifier>
+	</dependency>
   </dependencies>
   
   <dependencyManagement>
@@ -51,23 +58,86 @@
         </dependency>
     </dependencies>
   </dependencyManagement>
-  
+
   <build>
+      <finalName>service-zuul</finalName>
+    
       <plugins>
-          <plugin>
-              	<groupId>org.springframework.boot</groupId>
-              	<artifactId>spring-boot-maven-plugin</artifactId>
-          </plugin>
-          
-   		  <plugin>
+   			<plugin>
            		<groupId>org.apache.maven.plugins</groupId>
            		<artifactId>maven-compiler-plugin</artifactId>
            		<configuration>
                		<source>1.8</source>
                		<target>1.8</target>
+                	<encoding>UTF-8</encoding>
            		</configuration>
-           </plugin>
+       		</plugin>
+            
+	        <!-- 创建可执行jar：class文件、jar文件等 -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!-- 用该版本才能成功访问jsp页面 -->
+				<version>1.4.2.RELEASE</version>
+				<configuration>
+                	<!--fork :  如果没有该项配置，devtools不会起作用，即应用不会restart -->
+	            	<fork>true</fork>
+	            </configuration>
+			</plugin>
+		
+			<!-- 打包时跳过junit单元测试 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		
+			<!-- 忽略无web.xml警告 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+  
+	  		<!-- 自定义工程打包过程 -->
+	       	<plugin>  
+	           	<groupId>org.apache.maven.plugins</groupId>  
+	           	<artifactId>maven-assembly-plugin</artifactId>
+	           	<version>2.6</version>
+	           	<configuration>
+	               	<descriptors>  
+	                   	<descriptor>src/main/assembly/package.xml</descriptor>  
+	               	</descriptors>  
+	           	</configuration>  
+	           	<executions>  
+	                <execution>  
+	                    <id>make-assembly</id>  
+	                    <phase>package</phase>  
+	                    <goals>  
+	                        <goal>single</goal>  
+	                    </goals>
+	                </execution>
+	           	</executions>
+	       	</plugin>
       </plugins>
+      
+      <resources>
+        <!-- 复制到BOOT-INF\classes目录下 -->
+        <resource>
+            <directory>src/main/resources</directory>
+            <filtering>false</filtering>
+            <excludes>
+                <exclude>application.yml</exclude>
+                <exclude>application.properties</exclude>
+                <exclude>logback.xml</exclude>
+            </excludes>
+        </resource>
+    </resources>
+    
   </build>
   
 </project>

@@ -4,12 +4,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpResponse;
+
+import net.sf.json.JSONObject;
 
 public class DefaultClientHttpResponse implements ClientHttpResponse {
 	private String route;
@@ -30,7 +30,7 @@ public class DefaultClientHttpResponse implements ClientHttpResponse {
 			object.put("message", route + " 不可用!");
 			result = object.toString();
 			
-		} catch (JSONException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
