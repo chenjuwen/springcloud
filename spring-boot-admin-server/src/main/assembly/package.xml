@@ -32,7 +32,7 @@
             <directory>/target</directory>    
             <outputDirectory>/</outputDirectory>  
             <includes>  
-                <include>spring-boot-admin-server.jar</include>
+                <include>admin-server.jar</include>
             </includes> 
         </fileSet>
     </fileSets>  

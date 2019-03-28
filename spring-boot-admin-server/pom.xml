@@ -59,7 +59,7 @@
   </dependencyManagement>
 
   <build>
-      <finalName>spring-boot-admin-server</finalName>
+      <finalName>admin-server</finalName>
     
       <plugins>
    			<plugin>
@@ -127,10 +127,13 @@
       <resources>
         <!-- 复制到BOOT-INF\classes目录下 -->
         <resource>
-            <directory>${basedir}/src/main/resources</directory>
-            <includes>
-                <include>**/**</include>
-            </includes>
+            <directory>src/main/resources</directory>
+            <filtering>false</filtering>
+            <excludes>
+                <exclude>application.yml</exclude>
+                <exclude>application.properties</exclude>
+                <exclude>logback.xml</exclude>
+            </excludes>
         </resource>
     </resources>
     

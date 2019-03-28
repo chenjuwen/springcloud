@@ -38,8 +38,11 @@ management:
       show-details: ALWAYS
 
 logging:
-  config: classpath:logback.xml
-  
+  config: config/logback.xml
+  level:
+    root: INFO
+    org.springframework.boot.autoconfigure: WARN
+    
 #每个环境的配置根据 '---'分隔符隔开      
 ---
 spring:
