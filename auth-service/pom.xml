@@ -89,7 +89,6 @@
 		<groupId>commons-codec</groupId>
 		<artifactId>commons-codec</artifactId>
 	</dependency>
-		
   </dependencies>
   
   <dependencyManagement>
@@ -173,10 +172,12 @@
       <resources>
         <!-- 复制到BOOT-INF\classes目录下 -->
         <resource>
-            <directory>${basedir}/src/main/resources</directory>
-            <includes>
-                <include>**/**</include>
-            </includes>
+            <directory>src/main/resources</directory>
+            <filtering>false</filtering>
+            <excludes>
+                <exclude>application.properties</exclude>
+                <exclude>logback.xml</exclude>
+            </excludes>
         </resource>
     </resources>
     
