@@ -124,11 +124,13 @@
         </resource>
         
         <!-- 复制到BOOT-INF\classes目录下 -->
-        <resource>
-            <directory>${basedir}/src/main/resources</directory>
-            <includes>
-                <include>**/**</include>
-            </includes>
+		<resource>
+            <directory>src/main/resources</directory>
+            <filtering>false</filtering>
+            <excludes>
+                <exclude>application.properties</exclude>
+                <exclude>logback.xml</exclude>
+            </excludes>
         </resource>
     </resources>
     
