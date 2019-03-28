@@ -13,10 +13,10 @@
     </appender>
     
 	<appender name="main" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${LOG_DIR}/boot-${LOG_DATE}.txt</file>
+		<file>${LOG_DIR}/config-center-${LOG_DATE}.txt</file>
 		<append>true</append>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${LOG_DIR}/boot-%d{yyyyMMdd}.%i.txt</fileNamePattern>
+			<fileNamePattern>${LOG_DIR}/config-center-%d{yyyyMMdd}.%i.txt</fileNamePattern>
 			<maxHistory>${LOG_MAX_HISTORY}</maxHistory>
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<maxFileSize>64MB</maxFileSize>
