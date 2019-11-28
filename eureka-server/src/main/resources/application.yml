@@ -1,0 +1,46 @@
+server:
+  port: 3001
+  
+spring:
+  application:
+    name: eureka-server
+  security:
+    user:
+      name: root
+      password: 123456
+
+eureka:
+  server:
+    ## 是否开启自我保护模式
+    enable-self-preservation: false
+    ## 心跳阈值重新计算的时间间隔
+    renewal-threshold-update-interval-ms: 120000
+    ## 清理失效服务的间隔时间
+    eviction-interval-timer-in-ms: 5000
+    ## 是否启用只读响应缓存
+    use-read-only-response-cache: false
+    ## ReadWriteCacheMap的过期时间
+    response-cache-auto-expiration-in-seconds: 60
+    ## 指定每分钟需要收到的续约次数的阈值
+    renewal-percent-threshold: 0.49
+  instance:
+    hostname: ${spring.cloud.client.ip-address}
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    prefer-ip-address: true
+    ## 发送心跳续约的间隔时间
+    lease-renewal-interval-in-seconds: 5
+    ## 实例没有心跳的淘汰时间
+    lease-expiration-duration-in-seconds: 15
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+    
+logging:
+  config: config/logback.xml
+  level:
+    root: INFO
+    #remove CONDITIONS EVALUATION REPORT message
+    org.springframework.boot.autoconfigure: WARN
+   

@@ -7,9 +7,11 @@ eureka:
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
     prefer-ip-address: true
   client:
+    ## 将实例信息变更同步到Eureka Server的初始延迟时间
+    initial-instance-info-replication-interval-seconds: 10
     service-url:
       defaultZone: http://root:123456@${eureka.instance.hostname}:3001/eureka/
-  
+
 spring:
   application:
     name: service-gateway

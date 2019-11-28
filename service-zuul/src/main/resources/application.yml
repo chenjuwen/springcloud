@@ -1,0 +1,30 @@
+server:
+  port: 3008
+  
+spring:
+  application:
+    name: service-zuul
+    
+eureka:
+  instance:
+    hostname: ${spring.cloud.client.ip-address}
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://root:123456@${eureka.instance.hostname}:3001/eureka/
+
+zuul:
+  strip-prefix: true
+  routes:
+    service-consumer-1: /api-a/**
+    b:
+      path: /api-b/**
+      service-id: service-consumer-2
+
+logging:
+  config: config/logback.xml
+  level:
+    root: INFO
+    #remove CONDITIONS EVALUATION REPORT message
+    org.springframework.boot.autoconfigure: WARN

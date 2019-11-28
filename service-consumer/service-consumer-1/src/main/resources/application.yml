@@ -1,0 +1,41 @@
+server:
+  port: 9001
+  
+spring:
+  application:
+    name: service-consumer-1
+  sleuth:
+    sampler:
+      probability: 1.0
+  zipkin:
+    base-url: http://localhost:9411
+    
+eureka:
+  instance:
+    hostname: ${spring.cloud.client.ip-address}
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    #使用ip地址而不是主机名进行服务注册
+    prefer-ip-address: true
+    ## 续约的心跳频率
+    lease-renewal-interval-in-seconds: 10
+  client:
+    ## 拉取服务注册信息的间隔秒数
+    registry-fetch-interval-seconds: 5
+    ## 将实例信息变更同步到Eureka Server的初始延迟时间
+    initial-instance-info-replication-interval-seconds: 10
+    ## http连接超时时间，默认为5秒
+    eureka-server-connect-timeout-seconds: 30
+    register-with-eureka: true
+    service-url:
+      #defaultZone: http://192.168.134.134:7001/eureka/
+      defaultZone: http://root:123456@${eureka.instance.hostname}:7001/eureka/
+
+management:
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level: 
+    org.springframework.web: DEBUG
+
