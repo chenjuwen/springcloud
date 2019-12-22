@@ -27,12 +27,12 @@ eureka:
     hostname: ${spring.cloud.client.ip-address}
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
     prefer-ip-address: true
-    ## 发送心跳续约的间隔时间
-    lease-renewal-interval-in-seconds: 5
-    ## 实例没有心跳的淘汰时间
+    ## 续约过期的淘汰时间
     lease-expiration-duration-in-seconds: 15
   client:
+    #是否注册自身为服务
     register-with-eureka: false
+    #是否拉取服务列表
     fetch-registry: false
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/

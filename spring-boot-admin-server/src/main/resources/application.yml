@@ -14,18 +14,20 @@ eureka:
     hostname: ${spring.cloud.client.ip-address}
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
     prefer-ip-address: true
-    #
-    lease-renewal-interval-in-seconds: 10  #表示eureka client发送心跳给server端的频率
-    health-check-url-path: /actuator/health  #健康检查页面的URL路径
+    #表示eureka client发送心跳给server端的频率
+    lease-renewal-interval-in-seconds: 10
+    #健康检查页面的URL路径
+    health-check-url-path: /actuator/health
     #注册给eureka时告诉eureka自己的密码
     metadata-map: 
       user.name: ${spring.security.user.name}
       user.password: ${spring.security.user.password}
   client:
-    registry-fetch-interval-seconds: 5  #表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+    #表示eureka client间隔多久去拉取服务注册信息，默认为30秒
+    registry-fetch-interval-seconds: 5  
     #注册中心地址
     service-url:
-      defaultZone: http://root:123456@${eureka.instance.hostname}:3001/eureka/
+      defaultZone: http://admin:123456@${eureka.instance.hostname}:3001/eureka/
 
 #管理端点的配置
 management:

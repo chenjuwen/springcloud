@@ -17,7 +17,7 @@ eureka:
     #使用ip地址而不是主机名进行服务注册
     prefer-ip-address: true
     ## 续约的心跳频率
-    lease-renewal-interval-in-seconds: 10
+    lease-renewal-interval-in-seconds: 5
   client:
     ## 拉取服务注册信息的间隔秒数
     registry-fetch-interval-seconds: 5
